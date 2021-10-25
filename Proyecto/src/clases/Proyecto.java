@@ -34,6 +34,4 @@ public class Proyecto {
 		this.listaDeListas = listaDeListas;
 	}
 	
-	
-	
 }
