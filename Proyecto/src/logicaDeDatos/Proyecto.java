@@ -7,14 +7,16 @@ public class Proyecto {
 	private String nombre;
 	private boolean favorito;
 	private ArrayList<Usuario> usuarios;
+	private ArrayList<Tarea> tareas;
 	private Color color;
 	
-	public Proyecto(String nombre, boolean favorito, ArrayList<Usuario> usuarios) {
+	public Proyecto(String nombre, boolean favorito, ArrayList<Usuario> usuarios, ArrayList<Tarea> tareas, Color color) {
 		super();
 		this.nombre = nombre;
 		this.favorito = favorito;
 		this.usuarios = usuarios;
-		this.color = color.white;
+		this.tareas = tareas;
+		this.color = color;
 	}
 
 	public String getNombre() {
@@ -48,6 +50,13 @@ public class Proyecto {
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
 
+	public ArrayList<Tarea> getTareas() {
+		return tareas;
+	}
+
+	public void setTareas(ArrayList<Tarea> tareas) {
+		this.tareas = tareas;
+	}
+	
 }
