@@ -3,35 +3,33 @@ package logicaDeDatos;
 import java.util.ArrayList;
 
 public class Usuario {
-	private String usuario;
-	private String contraseña;
+	private String nickUsuario;
+	private String contrasena;
 	private String nombre;
 	private String mail;
-	private ArrayList<Proyecto> proyectos;
 	
-	public Usuario(String usuario, String contraseña, String nombre, String mail, ArrayList<Proyecto> proyectos) {
+	public Usuario(String nickUsuario, String contrasena, String nombre, String mail, ArrayList<Proyecto> proyectos) {
 		super();
-		this.usuario = usuario;
-		this.contraseña = contraseña;
+		this.nickUsuario = nickUsuario;
+		this.contrasena = contrasena;
 		this.nombre = nombre;
 		this.mail = mail;
-		this.proyectos = proyectos;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getnickUsuario() {
+		return nickUsuario;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setnickUsuario(String nickUsuario) {
+		this.nickUsuario = nickUsuario;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContrasena() {
+		return contrasena;
 	}
 
 	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+		this.contrasena = contraseña;
 	}
 
 	public String getNombre() {
@@ -50,13 +48,6 @@ public class Usuario {
 		this.mail = mail;
 	}
 
-	public ArrayList<Proyecto> getProyectos() {
-		return proyectos;
-	}
-
-	public void setProyectos(ArrayList<Proyecto> proyectos) {
-		this.proyectos = proyectos;
-	}
 
 	
 }

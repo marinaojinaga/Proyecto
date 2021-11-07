@@ -5,7 +5,7 @@ import logicaDeDatos.Usuario;
 /**
  * Esta clase tendrá las distintas acciones que se usarán para gestionar a los usuarios
  * @author Marina
- * @version 1
+ * @version 2
  */
 
 public class GestionUsuario {
@@ -17,7 +17,7 @@ public class GestionUsuario {
 	 * @param contraNueva Es la contraseña nueva que quiere poner el usuario
 	 */
 	public void cambiarContraseña(Usuario u, String contraIntro, String contraNueva) {
-		if(u.getContraseña().equals(contraIntro)) {
+		if(u.getContrasena().equals(contraIntro)) {
 			u.setContraseña(contraNueva);
 			System.out.println("Contraseña cambiada con exito.");
 		}else {
@@ -33,7 +33,7 @@ public class GestionUsuario {
 	 * @param emailNuevo Es el nuevo email que va a tener el usuario
 	 */
 	public void cambiarMail(Usuario u, String contraseña, String emailNuevo) {
-		if(u.getContraseña().equals(contraseña)) {
+		if(u.getContrasena().equals(contraseña)) {
 			u.setMail(emailNuevo);
 			System.out.println("Mail cambiado");
 		}else {
@@ -41,5 +41,9 @@ public class GestionUsuario {
 		}
 	}
 	
+	public boolean acceder(Usuario u, String mail, String contraseña) {
+		boolean acceso = u.getMail().equals(mail)&&u.getContrasena().equals(contraseña);
+		return acceso;
+	}
 
 }
