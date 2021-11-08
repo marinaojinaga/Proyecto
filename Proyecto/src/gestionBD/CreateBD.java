@@ -2,6 +2,13 @@ package gestionBD;
 
 import java.sql.*;
 
+/**
+ * Clase para crear la base de datos
+ * @author sqlitetutorial.net
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class CreateBD {
 	
 	public static void crearNuevaBasedeDatos (String nombre) {
