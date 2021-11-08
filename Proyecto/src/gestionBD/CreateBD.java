@@ -11,8 +11,8 @@ import java.sql.*;
 
 public class CreateBD {
 	
-	public static void crearNuevaBasedeDatos (String nombre) {
-		String url = "jbdc:sqlite:"+nombre;
+	public static void crearNuevaBasedeDatos () {
+		String url = "jbdc:sqlite:"+"Proyecto";
 		
 		try (Connection conn = DriverManager.getConnection(url)){
 			if (conn !=null) {

@@ -12,17 +12,17 @@ import java.sql.*;
 
 public class CreateTable {
 	
-	public static void createTableSubtareas(String name)
+	public static void createTableSubtareas()
     {
         // SQLite connection string
-        String url = "jdbc:sqlite:" + name;
+        String url = "jdbc:sqlite:" + "proyecto";
 
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS subtareas (\n"
                 + "    id integer PRIMARY KEY,\n"
                 + "    nombre text NOT NULL,\n"
-                + "    hecho boolean NOT NULL\n"
-                + "    prioridad hecho NOT NULL\n"
+                + "    hecho integer NOT NULL,\n"
+                + "    prioridad integer NOT NULL\n"
                 + ");";
 
         try
@@ -39,21 +39,21 @@ public class CreateTable {
         }
     }
 	
-	public static void createTableTareas(String name)
+	public static void createTableTareas()
     {
         // SQLite connection string
-        String url = "jdbc:sqlite:" + name;
+        String url = "jdbc:sqlite:" + "proyecto";
 
         // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS subtareas (\n"
+        String sql = "CREATE TABLE IF NOT EXISTS tareas (\n"
                 + "    id integer PRIMARY KEY,\n"
                 + "    nombre text NOT NULL,\n"
-                + "    hecho boolean NOT NULL\n"
-                + "    prioridad hecho NOT NULL\n"
+                + "    hecho int NOT NULL\n"
+                + "    prioridad int NOT NULL\n"
                 + "    descripcion text NOT NULL,\n"
-                /*dates*
-                 * ArrayList
-                 */
+                + "    fechaLimite real NOT NULL, \n"
+                + "    fechaRealizacion real NOT NULL, \n"
+                + "    subtareas text NOT NULL \n"
                 + ");";
 
         try
@@ -70,18 +70,18 @@ public class CreateTable {
         }
     }
 	
-	public static void createTableUsuarios(String name)
+	public static void createTableUsuarios()
     {
         // SQLite connection string
-        String url = "jdbc:sqlite:" + name;
+        String url = "jdbc:sqlite:" + "proyecto";
 
         // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS subtareas (\n"
+        String sql = "CREATE TABLE IF NOT EXISTS usuarios (\n"
                 + "    id integer PRIMARY KEY,\n"
                 + "    nickUsuario text NOT NULL,\n"
-                + "    contrasena text NOT NULL\n"
-                + "    nombre text NOT NULL\n"
-                + "    mail text NOT NULL\n"
+                + "    contrasena text NOT NULL,\n"
+                + "    nombre text NOT NULL,\n"
+                + "    mail text NOT NULL,\n"
                 + ");";
 
         try
@@ -98,17 +98,18 @@ public class CreateTable {
         }
     }
 	
-	public static void createTableProyectos(String name)
+	public static void createTableProyectos()
     {
         // SQLite connection string
-        String url = "jdbc:sqlite:" + name;
+        String url = "jdbc:sqlite:" + "proyecto";
 
         // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS subtareas (\n"
+        String sql = "CREATE TABLE IF NOT EXISTS proyectos (\n"
                 + "    id integer PRIMARY KEY,\n"
                 + "    nombre text NOT NULL,\n"
-                + "    favorito boolean NOT NULL\n"
-                /*Usuarios y arraylist*/
+                + "    favorito integer NOT NULL,\n"
+                + "    usuarios text NOT NULL,\n"
+                + "    tareas text NOT NULL \n"
                 + ");";
 
         try
