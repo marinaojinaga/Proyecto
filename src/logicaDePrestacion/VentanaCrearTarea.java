@@ -17,7 +17,7 @@ public class VentanaCrearTarea extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField nombreTarea;
-	private JTextField DescripciónTarea;
+	private JTextField DescripcionTarea;
 	private JTextField ddFechaLimite;
 	private JTextField mmFechaLimite;
 	private JTextField aaaaFechaLimite;
@@ -89,11 +89,11 @@ public class VentanaCrearTarea extends JFrame {
 		contentPane.add(nombreTarea);
 		nombreTarea.setColumns(10);
 		
-		DescripciónTarea = new JTextField();
-		DescripciónTarea.setFont(new Font("Bookman Old Style", Font.PLAIN, 18));
-		DescripciónTarea.setColumns(10);
-		DescripciónTarea.setBounds(129, 239, 817, 63);
-		contentPane.add(DescripciónTarea);
+		DescripcionTarea = new JTextField();
+		DescripcionTarea.setFont(new Font("Bookman Old Style", Font.PLAIN, 18));
+		DescripcionTarea.setColumns(10);
+		DescripcionTarea.setBounds(129, 239, 817, 63);
+		contentPane.add(DescripcionTarea);
 		
 		ddFechaLimite = new JTextField();
 		ddFechaLimite.setFont(new Font("Bookman Old Style", Font.PLAIN, 18));

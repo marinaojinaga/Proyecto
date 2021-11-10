@@ -35,7 +35,7 @@ public class UsuarioTest {
 	@Test
 	public void getContrasenaTest() {
 		String contrasena = "12345678A";
-		usuario.setContraseña(contrasena);
+		usuario.setContrasenya(contrasena);
 		assertEquals(usuario.getContrasena(),contrasena);
 		
 	}

@@ -28,8 +28,8 @@ public class Usuario {
 		return contrasena;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contrasena = contraseña;
+	public void setContrasenya(String contrasenya) {
+		this.contrasena = contrasenya;
 	}
 
 	public String getNombre() {
