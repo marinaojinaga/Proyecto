@@ -1,7 +1,7 @@
 package logicaDeDatos;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Representa una tarea. La clase extiende de la clase TareaGeneral.
@@ -17,11 +17,11 @@ public class Tarea extends TareaGeneral{
 	
 	/**Fecha limite en la que hay que entregar la tarea o quieres tenerla hecha
 	 */
-	private Date fechaLimite;
+	private Calendar fechaLimite;
 	
 	/** Fecha en la que planeas hacer la tarea
 	 */
-	private Date fechaRealizacion;
+	private Calendar fechaRealizacion;
 	
 	/** Lista de subtareas incluidas dentro de una tarea
 	 */
@@ -33,12 +33,12 @@ public class Tarea extends TareaGeneral{
 	 * @param hecho Booleano que representa si se ha hecho la tarea. Parametro hereado de TareaGeneral.
 	 * @param prioridad Entero del 0 al 4 con la prioridad de la tarea. Parametro herado de TareaGeneral.
 	 * @param descripcion String con una breve descripcion de la tarea.
-	 * @param fechaLimite Tipo Date que indica la fecha limite de realizacion de la tarea.
-	 * @param fechaRealizacion Tipo Date que indica la fecha en la qeu planeas hacer la tarea
+	 * @param fechaLimite Tipo Calendar que indica la fecha limite de realizacion de la tarea.
+	 * @param fechaRealizacion Tipo Calendar que indica la fecha en la qeu planeas hacer la tarea
 	 * @param subtareas ArrayList que contendrá las subtareas de una tarea
 	 */
-	public Tarea(String nombre, boolean hecho, int prioridad, String descripcion, Date fechaLimite,
-			Date fechaRealizacion, ArrayList<Subtarea> subtareas) {
+	public Tarea(String nombre, boolean hecho, int prioridad, String descripcion, Calendar fechaLimite,
+			Calendar fechaRealizacion, ArrayList<Subtarea> subtareas) {
 		super(nombre, hecho, prioridad);
 		this.descripcion = descripcion;
 		this.fechaLimite = fechaLimite;
@@ -64,33 +64,33 @@ public class Tarea extends TareaGeneral{
 
 	/**
 	 * Devuelve la fecha limite en la que tienes que tener hecho algo
-	 * @return fechaLimite de tipo Date
+	 * @return fechaLimite de tipo Calendar
 	 */
-	public Date getFechaLimite() {
+	public Calendar getFechaLimite() {
 		return fechaLimite;
 	}
 
 	/**
 	 * Establece la fecha limite de una tarea
-	 * @param fechaLimite es una variable de tipo Date
+	 * @param fechaLimite es una variable de tipo Calendar
 	 */
-	public void setFechaLimite(Date fechaLimite) {
+	public void setFechaLimite(Calendar fechaLimite) {
 		this.fechaLimite = fechaLimite;
 	}
 
 	/**
 	 * Devuelve la fecha de realizacion de una tarea
-	 * @return fechaRealizacion de tipo Date
+	 * @return fechaRealizacion de tipo Calendar
 	 */
-	public Date getFechaRealizacion() {
+	public Calendar getFechaRealizacion() {
 		return fechaRealizacion;
 	}
 
 	/**
 	 * Establece la fecha en la que has pensado realizar una tarea
-	 * @param fechaRealizacion de tipo Date
+	 * @param fechaRealizacion de tipo Calendar
 	 */
-	public void setFechaRealizacion(Date fechaRealizacion) {
+	public void setFechaRealizacion(Calendar fechaRealizacion) {
 		this.fechaRealizacion = fechaRealizacion;
 	}
 

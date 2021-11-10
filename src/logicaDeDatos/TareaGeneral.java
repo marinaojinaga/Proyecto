@@ -78,11 +78,7 @@ public abstract class TareaGeneral {
 	 * @param prioridad Entero de 0 a 4. Si se sale de estos parámetros devuelve error.
 	 */
 	public void setPrioridad(int prioridad) {
-		if(prioridad>=0 && prioridad<=4) {
-			this.prioridad = prioridad;
-		}else {
-			System.out.println("La prioridad solo puede ir de 0 a 4.");
-		}
+		this.prioridad = prioridad;
 		
 	}
 	

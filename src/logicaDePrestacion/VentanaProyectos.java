@@ -69,7 +69,7 @@ public class VentanaProyectos extends JFrame {
 		btnSalir.setBounds(578, 402, 265, 47);
 		contentPane.add(btnSalir);
 		
-		JButton btnBorrarproyecto = new JButton("BorrarProyecto");
+		JButton btnBorrarproyecto = new JButton("Borrar proyecto");
 		btnBorrarproyecto.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		btnBorrarproyecto.setBounds(578, 241, 265, 47);
 		contentPane.add(btnBorrarproyecto);

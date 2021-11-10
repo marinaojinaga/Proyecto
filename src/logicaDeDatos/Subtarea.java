@@ -16,7 +16,7 @@ public class Subtarea extends TareaGeneral {
 	 * @param hecho Es un valor booleano de si la subtarea se encuentra hecha
 	 * @param prioridad Es un entero que va desde 0 hasta 4 mostrando la prioridad que tiene 
 	 */
-	public Subtarea(String nombre, boolean hecho, int prioridad, Tarea tareaMadre) {
+	public Subtarea(String nombre, boolean hecho, int prioridad) {
 		super(nombre, hecho, prioridad);
 	}
 

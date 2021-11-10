@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class CerrarBD {
 	private Connection conn;
-	private String BDname = "proyecto";
+	private String BDname = "proyecto.bd";
 	private final String URL = "jdbc:sqlite:";
 	
 	 public void createLink() throws SQLException

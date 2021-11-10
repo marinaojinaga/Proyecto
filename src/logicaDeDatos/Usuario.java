@@ -8,7 +8,7 @@ public class Usuario {
 	private String nombre;
 	private String mail;
 	
-	public Usuario(String nickUsuario, String contrasena, String nombre, String mail, ArrayList<Proyecto> proyectos) {
+	public Usuario(String nickUsuario, String contrasena, String nombre, String mail) {
 		super();
 		this.nickUsuario = nickUsuario;
 		this.contrasena = contrasena;

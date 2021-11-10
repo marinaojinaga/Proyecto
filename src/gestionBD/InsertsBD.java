@@ -14,7 +14,7 @@ public class InsertsBD {
 	 private Connection connect()
 	    {
 	        // SQLite connection string
-		 	String name = "Proyecto";
+		 	String name = "BaseDeDatos.db";
 	        String url = "jdbc:sqlite:"+name;
 	        Connection conn = null;
 
@@ -114,10 +114,11 @@ public class InsertsBD {
         }
         catch (SQLException e)
         {
+        	System.out.println("Hola");
             System.out.println(e.getMessage());
         }
     }
-
+	
 	
 
 }

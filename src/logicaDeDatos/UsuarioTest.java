@@ -1,5 +1,7 @@
 package logicaDeDatos;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -14,7 +16,7 @@ public class UsuarioTest {
 	
 	@Before
 	public void setUp(){
-		usuario = new Usuario(null, null, null, null, null);
+		usuario = new Usuario(null, null, null, null);
 	}
 	
 	@After
@@ -26,28 +28,31 @@ public class UsuarioTest {
 	public void getNickUsuarioTest() {
 		String nick = "josePerez";
 		usuario.setnickUsuario(nick);
-		assert(usuario.getnickUsuario().equals(nick));
+		assertEquals(usuario.getnickUsuario(), nick);
 		
 	}
 	
-	public void getContrasena() {
+	@Test
+	public void getContrasenaTest() {
 		String contrasena = "12345678A";
 		usuario.setContraseña(contrasena);
-		assert(usuario.getContrasena().equals(contrasena));
+		assertEquals(usuario.getContrasena(),contrasena);
 		
 	}
 	
+	@Test
 	public void getNombreTest() {
 		String nombre = "Jose Perez";
 		usuario.setNombre(nombre);
-		assert(usuario.getNombre().equals(nombre));
+		assertEquals(usuario.getNombre(),nombre);
 		
 	}
 	
+	@Test
 	public void getMailTest() {
 		String mail = "joseperez@gmail.com";
 		usuario.setMail(mail);
-		assert(usuario.getMail().equals(mail));
+		assertEquals(usuario.getMail(),mail);
 		
 	}
 	

@@ -10,12 +10,13 @@ import java.sql.*;
  *
  */
 
+//Hacer solo un método y pasarle el string sql
 public class CreateTable {
 	
 	public static void createTableSubtareas()
     {
         // SQLite connection string
-        String url = "jdbc:sqlite:" + "proyecto";
+        String url = "jdbc:sqlite:" + "BaseDeDatos.db";
 
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS subtareas (\n"
@@ -42,13 +43,13 @@ public class CreateTable {
 	public static void createTableTareas()
     {
         // SQLite connection string
-        String url = "jdbc:sqlite:" + "proyecto";
+        String url = "jdbc:sqlite:" + "BaseDeDatos.db";
 
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS tareas (\n"
                 + "    id integer PRIMARY KEY,\n"
                 + "    nombre text NOT NULL,\n"
-                + "    hecho int NOT NULL\n"
+                + "    hecho integer NOT NULL\n"
                 + "    prioridad int NOT NULL\n"
                 + "    descripcion text NOT NULL,\n"
                 + "    fechaLimite real NOT NULL, \n"
@@ -73,7 +74,7 @@ public class CreateTable {
 	public static void createTableUsuarios()
     {
         // SQLite connection string
-        String url = "jdbc:sqlite:" + "proyecto";
+        String url = "jdbc:sqlite:" + "BaseDeDatos.db";
 
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS usuarios (\n"
@@ -101,7 +102,7 @@ public class CreateTable {
 	public static void createTableProyectos()
     {
         // SQLite connection string
-        String url = "jdbc:sqlite:" + "proyecto";
+        String url = "jdbc:sqlite:" + "BaseDeDatos.db";
 
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS proyectos (\n"
@@ -125,5 +126,12 @@ public class CreateTable {
             System.out.println(e.getMessage());
         }
     }
+	
+	public static void main(String[] args) {
+		createTableProyectos();
+		createTableSubtareas();
+		createTableTareas();
+		createTableUsuarios();
+	}
 
 }
