@@ -32,10 +32,11 @@ public class GestionProyecto {
 	 * @param p Es el proyecto al que podemos 
 	 * @param u Es el usuario al que queremos dar acceso al proyecto p.
 	 */
-	public void anyadirUsuario(Proyecto p, Usuario u) {
+	public ArrayList<Usuario> anyadirUsuario(Proyecto p, Usuario u) {
 		ArrayList<Usuario> us = p.getUsuarios();
 		us.add(u);
 		p.setUsuarios(us);
+		return p.getUsuarios();
 	}
 	
 	/**
