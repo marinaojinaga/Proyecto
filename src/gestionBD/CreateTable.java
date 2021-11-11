@@ -10,7 +10,7 @@ import java.sql.*;
  *
  */
 
-//Hacer solo un método y pasarle el string sql
+//Hacer solo un metodo y pasarle el string sql
 public class CreateTable {
 	
 	public static void createTableSubtareas()
