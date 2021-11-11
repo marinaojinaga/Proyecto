@@ -11,17 +11,16 @@ import java.sql.*;
 import java.text.ParseException;
 
 public class GestorBD {
-    private Connection conn;
-
+    Connection conn = null;
     //HACER UNA CONEXIÓN
-    private void conectarse() {
+    private Connection conectarse() {
         try {
             String BDnombre  =  "jdbc:sqlite:BaseDeDatos.db";
-            this.conn = DriverManager.getConnection(BDnombre);
+            conn = DriverManager.getConnection(BDnombre);
         }catch (SQLException e){
             System.out.println("BadAss error creating connection. "+ e.getMessage());
         }
-
+        return conn;
     }
 
     //EJECUTAR UN STATEMENT
@@ -203,6 +202,112 @@ public class GestorBD {
         }catch (SQLException e){
             System.out.println("BadAss error executing insert "+e.getMessage());
         }
+    }
+
+    //SELECTS
+    public void selectTareas() throws SQLException{
+        String sql = "SELECT id,nombre, hecho,prioridad,descripcion,fechaLimite,fechaRealizacion,subtareas FROM tareas";
+        try
+                (
+                        Connection conn = this.conectarse();
+                        Statement stmt = conn.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql)
+                        )
+        {
+            while(rs.next()){
+                System.out.println(
+                        rs.getInt("id") + "\t"+
+                        rs.getString("nombre")+ "\t"+
+                        rs.getInt("hecho")+ "\t"+
+                        rs.getInt("prioridad")+ "\t"+
+                        rs.getString("descripcion")+ "\t"+
+                        rs.getDate("fechaLimite")+ "\t"+
+                        rs.getDate("fechaRealizacion")+ "\t"+
+                        rs.getString("subtareas"));
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void selectUsuario() throws SQLException{
+        String sql = "SELECT id,nickUsuario,contrasena,nombre,mail FROM usuarios";
+        try
+                (
+                        Connection conn = this.conectarse();
+                        Statement stmt = conn.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql)
+                )
+        {
+            while (rs.next())
+            {
+                System.out.println(
+                        rs.getInt("id") + "\t" +
+                                rs.getString("nickUsuario") + "\t" +
+                                rs.getString("contrasena") + "\t" +
+                                rs.getString("nombre") + "\t" +
+                                rs.getString("mail"));
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void selectSubtareas(){
+        String sql = "SELECT id,nombre,hecho,prioridad FROM subtareas";
+        try
+                (
+                        Connection conn = this.conectarse();
+                        Statement stmt = conn.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql)
+                        )
+        {
+            while (rs.next()){
+                System.out.println(
+                        rs.getInt("id")+"\t"+
+                        rs.getString("nombre")+"\t"+
+                        rs.getInt("hecho")+"\t"+
+                        rs.getInt("prioridad")
+                );
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void selectProyecto(){
+        String sql = "SELECT id,nombre,favorito,usuarios,tareas FROM proyectos";
+        try
+                (
+                        Connection conn = this.conectarse();
+                        Statement stmt = conn.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql)
+                        )
+        {
+            while (rs.next()){
+                System.out.println(
+                        rs.getInt("id")+"/t"+
+                        rs.getString("nombre")+"/t"+
+                        rs.getInt("favorito")+"/t"+
+                        rs.getString("usuarios")+"/t"+
+                        rs.getString("tareas")
+                );
+            }
+        }
+        catch (SQLException e){
+            e.getStackTrace();
+        }
+    }
+
+    public static void main(String[] args) throws SQLException{
+        GestorBD gestorBD = new GestorBD();
+        gestorBD.createNewTableProyecto();
+        gestorBD.createNewTableSubtareas();
+        gestorBD.createNewTableTareas();
+        gestorBD.createNewTableUsuario();
     }
 
 }
