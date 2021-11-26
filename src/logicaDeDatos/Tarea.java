@@ -11,7 +11,7 @@ import java.util.Calendar;
  */
 public class Tarea extends TareaGeneral{
 	
-	/**Descripcion de la tarea 
+	/**Descripcion de la tarea 0
 	 */
 	private String descripcion;
 	

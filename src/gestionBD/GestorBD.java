@@ -57,15 +57,16 @@ public class GestorBD {
     private void createNewTableTareas() throws SQLException {
         conectarse();
 
-        String sql = "CREATE TABLE IF NOT EXISTS tareas (\n"
-                +" id INTEGER PRIMARY KEY, \n"
-                + "nombre TEXT NOT NULL, \n"
-                + "hecho INTEGER NOT NULL, \n"
-                + "prioridad INTEGER NOT NULL, \n"
-                + "descripcion TEXT NOT NULL, \n"
-                + "fechaLimite DATETIME NOT NULL, \n"
-                + "fechaRealizacion DATE NOT NULL, \n"
-                + "subtareas TEXT NOT NULL, \n"
+        String sql = "CREATE TABLE IF NOT EXISTS TablaTareas (\n"
+                + "    id_table INTEGER PRIMARY KEY,\n"
+                + "    nombre VARCHAR NOT NULL,\n"
+                + "    hecho BIT NOT NULL,\n"
+                + "    prioridad INTEGER NOT NULL,\n"
+                + "    descripcion VARCHAR NOT NULL,\n"
+                + "    fechaLimite TIMESTAMP NOT NULL,\n"
+                + "    fechaRealizacion TIMESTAMP NOT NULL\n"
+                + "    id_proyectos INTEGER NOT NULL, "
+                + "    FOREIGN KEY (id_proyectos) REFERENCES TablaProyectos(id_proyectos)"
                 + ");";
 
         ejecutarStatement(sql);
@@ -79,7 +80,7 @@ public class GestorBD {
                 + "nickUsuario TEXT NOT NULL, \n"
                 + "contrasena TEXT NOT NULL, \n"
                 + "nombre TEXT NOT NULL, \n"
-                + "mail TEXT NOT NULL, \n"
+                + "mail TEXT NOT NULL \n"
                 + ");";
 
         ejecutarStatement(sql);
@@ -89,11 +90,12 @@ public class GestorBD {
     private void createNewTableSubtareas() throws SQLException {
         conectarse();
 
-        String sql = "CREATE TABLE IF NOT EXISTS subtareas (\n"
-                +" id INTEGER PRIMARY KEY, \n"
-                + "nombre TEXT NOT NULL, \n"
-                + "hecho INTEGER NOT NULL, \n"
-                + "prioridad INTEGER NOT NULL, \n"
+        String sql = "CREATE TABLE IF NOT EXISTS TablaSubtareas (\n"
+                + "    id_subtareas INTEGER PRIMARY KEY,\n"
+                + "    nombre VARCHAR NOT NULL,\n"
+                + "    prioridad INTEGER NOT NULL,\n"
+                + "    hecho BIT NOT NULL,\n"
+                + "    FOREIGN KEY (id_tarea) REFERENCES TableTareas (id_tarea)"
                 + ");";
 
         ejecutarStatement(sql);
@@ -108,7 +110,7 @@ public class GestorBD {
                 + "nombre TEXT NOT NULL, \n"
                 + "favorito INTEGER NOT NULL, \n"
                 + "usuarios TEXT NOT NULL, \n"
-                + "tareas TEXT NOT NULL, \n"
+                + "tareas TEXT NOT NULL \n"
                 + ");";
 
         ejecutarStatement(sql);

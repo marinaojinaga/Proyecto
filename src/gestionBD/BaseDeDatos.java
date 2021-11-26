@@ -28,7 +28,7 @@ public class BaseDeDatos {
 	    {
 	        // SQL statement for creating a new table
 	        String sql = "CREATE TABLE IF NOT EXISTS TablaUsuarios (\n"
-	                + "    id INTEGER PRIMARY KEY,\n"
+	                + "    id_usuario INTEGER PRIMARY KEY,\n"
 	                + "    nickUsuario VARCHAR NOT NULL,\n"
 	                + "    contrasena VARCHAR NOT NULL,\n"
 	                + "    nombre VARCHAR NOT NULL\n"
@@ -55,14 +55,15 @@ public class BaseDeDatos {
 	    {
 	        // SQL statement for creating a new table
 	        String sql = "CREATE TABLE IF NOT EXISTS TablaTareas (\n"
-	                + "    id INTEGER PRIMARY KEY,\n"
+	                + "    id_table INTEGER PRIMARY KEY,\n"
 	                + "    nombre VARCHAR NOT NULL,\n"
 	                + "    hecho BIT NOT NULL,\n"
 	                + "    prioridad INTEGER NOT NULL,\n"
 	                + "    descripcion VARCHAR NOT NULL,\n"
 	                + "    fechaLimite TIMESTAMP NOT NULL,\n"
 	                + "    fechaRealizacion TIMESTAMP NOT NULL\n"
-	               /* + "    subtareas ? NOT NULL\n"*/
+	                + "    id_proyectos INTEGER NOT NULL, "
+					+ "    FOREIGN KEY (id_proyectos) REFERENCES TablaProyectos(id_proyectos)"
 	                + ");";
 
 	        try
@@ -85,10 +86,11 @@ public class BaseDeDatos {
 	    {
 	        // SQL statement for creating a new table
 	        String sql = "CREATE TABLE IF NOT EXISTS TablaSubtareas (\n"
-	                + "    id INTEGER PRIMARY KEY,\n"
+	                + "    id_subtareas INTEGER PRIMARY KEY,\n"
 	                + "    nombre VARCHAR NOT NULL,\n"
 	                + "    prioridad INTEGER NOT NULL,\n"
 	                + "    hecho BIT NOT NULL,\n"
+					+ "    FOREIGN KEY (id_tarea) REFERENCES TableTareas (id_tarea)"
 	                + ");";
 
 	        try
@@ -111,11 +113,9 @@ public class BaseDeDatos {
 	    {
 	        // SQL statement for creating a new table
 	        String sql = "CREATE TABLE IF NOT EXISTS TablaProyectos (\n"
-	                + "    id INTEGER PRIMARY KEY,\n"
+	                + "    id_proyectos INTEGER PRIMARY KEY,\n"
 	                + "    nombre VARCHAR NOT NULL,\n"
 	                + "    favorit BIT NOT NULL,\n"
-	               /* + "  Usuarios ? NOT NULL,\n"*/
-	                /* + "  tareas ? NOT NULL,\n"*/
 	                + "    hecho BIT NOT NULL,\n"
 	                + ");";
 

@@ -11,7 +11,7 @@ import logicaDeDatos.Tarea;
  * Contiene las distintas acciones para gestionar un proyecto.
  * @author Marina Ojinaga
  * @version 1
- * @since 2
+ * @since 1
  */
 public class GestionProyecto {
 	

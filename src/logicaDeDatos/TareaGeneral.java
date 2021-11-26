@@ -17,7 +17,7 @@ public abstract class TareaGeneral {
 	
 	/**Representa la prioridad que tiene la tarea e irá desde 0 a 4
 	 */
-	private int prioridad;
+	private Prioridad prioridad;
 	
 	
 	/**
