@@ -9,7 +9,7 @@ import java.util.Calendar;
  * @version 1.0
  * @since 1.0
  */
-public class Tarea extends TareaGeneral{
+public class Tarea extends TareaGeneral implements iEnumAString{
 	
 	/**Descripcion de la tarea 0
 	 */
@@ -37,7 +37,7 @@ public class Tarea extends TareaGeneral{
 	 * @param fechaRealizacion Tipo Calendar que indica la fecha en la qeu planeas hacer la tarea
 	 * @param subtareas ArrayList que contendrá las subtareas de una tarea
 	 */
-	public Tarea(String nombre, boolean hecho, int prioridad, String descripcion, Calendar fechaLimite,
+	public Tarea(String nombre, boolean hecho, Prioridad prioridad, String descripcion, Calendar fechaLimite,
 			Calendar fechaRealizacion, ArrayList<Subtarea> subtareas) {
 		super(nombre, hecho, prioridad);
 		this.descripcion = descripcion;
@@ -109,5 +109,12 @@ public class Tarea extends TareaGeneral{
 	public void setSubtareas(ArrayList<Subtarea> subtareas) {
 		this.subtareas = subtareas;
 	}
-	
+
+
+	@Override
+	public String deEnumAString() {
+		String s = getPrioridad().toString();
+		return s;
+	}
+
 }

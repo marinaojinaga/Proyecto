@@ -17,7 +17,7 @@ public class TareaTest {
 	
 	@Before
 	public void setUp() {
-		tarea = new Tarea(null, false, 0, null, null, null, null);
+		tarea = new Tarea(null, false, null, null, null, null, null);
 	}
 	
 	@After
@@ -43,7 +43,7 @@ public class TareaTest {
 	
 	@Test
 	public void getPrioridadTest() {
-		int prioridad= 3;
+		Prioridad prioridad= Prioridad.Alta ;
 		tarea.setPrioridad(prioridad);
 		
 		assertEquals(prioridad, tarea.getPrioridad());
@@ -77,10 +77,10 @@ public class TareaTest {
 	
 	@Test
 	public void getSubtareasTest() {
-		Subtarea s1 = new Subtarea("s1", false, 4);
-		Subtarea s2 = new Subtarea("s2", true, 2);
-		Subtarea s3 = new Subtarea("s3", false, 3);
-		Subtarea s4 = new Subtarea("s4", true, 1);
+		Subtarea s1 = new Subtarea("s1", false, Prioridad.Alta);
+		Subtarea s2 = new Subtarea("s2", true, Prioridad.Media);
+		Subtarea s3 = new Subtarea("s3", false, Prioridad.Alta);
+		Subtarea s4 = new Subtarea("s4", true, Prioridad.Baja);
 		ArrayList<Subtarea> subtareas = new ArrayList<Subtarea>();
 		subtareas.add(s1);
 		subtareas.add(s2);

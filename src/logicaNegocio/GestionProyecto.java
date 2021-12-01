@@ -1,5 +1,6 @@
 package logicaNegocio;
 
+import logicaDeDatos.Prioridad;
 import logicaDeDatos.Usuario;
 
 import java.util.ArrayList;
@@ -69,24 +70,19 @@ public class GestionProyecto {
 	public ArrayList<Tarea> ordenarTareasXPrioridad(Proyecto t) {
 		ArrayList<Tarea> tareas= t.getTareas();
 		ArrayList<Tarea> tareasOrdenadas = new ArrayList<Tarea>();
-		
+
 		for(int i=0;i<tareas.size();i++) {
-			if(tareas.get(i).getPrioridad()==4) {
+			if(tareas.get(i).getPrioridad().equals(Prioridad.Alta)) {
 				tareasOrdenadas.add(tareas.get(i));
 			}
 		}
 		for(int i=0;i<tareas.size();i++) {
-			if(tareas.get(i).getPrioridad()==3) {
+			if(tareas.get(i).getPrioridad().equals(Prioridad.Media)) {
 				tareasOrdenadas.add(tareas.get(i));
 			}
 		}
 		for(int i=0;i<tareas.size();i++) {
-			if(tareas.get(i).getPrioridad()==2) {
-				tareasOrdenadas.add(tareas.get(i));
-			}
-		}
-		for(int i=0;i<tareas.size();i++) {
-			if(tareas.get(i).getPrioridad()==1) {
+			if(tareas.get(i).getPrioridad().equals(Prioridad.Baja)) {
 				tareasOrdenadas.add(tareas.get(i));
 			}
 		}

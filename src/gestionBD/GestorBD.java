@@ -5,10 +5,8 @@ import logicaDeDatos.Subtarea;
 import logicaDeDatos.Tarea;
 import logicaDeDatos.Usuario;
 import logicaNegocio.GestorArrayLists;
-import org.sqlite.util.StringUtils;
 
 import java.sql.*;
-import java.text.ParseException;
 
 public class GestorBD {
     Connection conn = null;
@@ -135,7 +133,7 @@ public class GestorBD {
 
             pstmt.setString(1,t.getNombre());
             pstmt.setBoolean(2, t.isHecho());
-            pstmt.setInt(3,t.getPrioridad());
+            pstmt.setString(3,t.deEnumAString());
             pstmt.setString(4, t.getDescripcion());
             pstmt.setDate(5,d1);
             pstmt.setDate(6,d2);
@@ -179,7 +177,7 @@ public class GestorBD {
         {
             pstmt.setString(1,s.getNombre());
             pstmt.setBoolean(2,s.isHecho());
-            pstmt.setInt(3,s.getPrioridad());
+            pstmt.setString(3,s.deEnumAString());
             pstmt.executeUpdate();
             closeLink();
         }catch (SQLException e) {

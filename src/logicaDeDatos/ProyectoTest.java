@@ -61,9 +61,9 @@ public class ProyectoTest {
 		Calendar f2 = Calendar.getInstance();
 		f2.set(2020, 5, 20);
 		
-		Subtarea s2 = new Subtarea("Subtarea 2", true, 3);
-		Subtarea s3 = new Subtarea("Subtarea 3", false, 2);
-		Subtarea s4 = new Subtarea("Subtarea 4", true, 1);
+		Subtarea s2 = new Subtarea("Subtarea 2", true, Prioridad.Alta);
+		Subtarea s3 = new Subtarea("Subtarea 3", false, Prioridad.Media);
+		Subtarea s4 = new Subtarea("Subtarea 4", true, Prioridad.Alta);
 		ArrayList<Subtarea> subs1 = new ArrayList<Subtarea>();
 		ArrayList<Subtarea> subs2 = new ArrayList<Subtarea>();
 		subs1.add(s4);
@@ -71,8 +71,8 @@ public class ProyectoTest {
 		subs2.add(s2);
 		subs2.add(s3);
 		
-		Tarea t1 = new Tarea("t1", false, 3, "Descripcion", f1, f2, subs1);
-		Tarea t2 = new Tarea("t2", true, 2, "Descripcion2", f2, f1, subs2);
+		Tarea t1 = new Tarea("t1", false, Prioridad.Baja, "Descripcion", f1, f2, subs1);
+		Tarea t2 = new Tarea("t2", true, Prioridad.Media, "Descripcion2", f2, f1, subs2);
 		ArrayList<Tarea> tareas = new ArrayList<Tarea>();
 		tareas.add(t1);
 		tareas.add(t2);

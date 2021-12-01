@@ -1,5 +1,6 @@
 package logicaDePrestacion;
 
+import java.awt.*;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -12,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import net.miginfocom.swing.*;
 
 public class VentanaCrearTarea extends JFrame {
 
@@ -187,4 +189,24 @@ public class VentanaCrearTarea extends JFrame {
 		btnConfirmarTarea.setBounds(20, 515, 196, 35);
 		contentPane.add(btnConfirmarTarea);
 	}
+
+    private void initComponents() {
+        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+        // Generated using JFormDesigner Evaluation license - Marina Ojinaga
+
+        //======== this ========
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new MigLayout(
+            "hidemode 3",
+            // columns
+            "[fill]" +
+            "[fill]",
+            // rows
+            "[]" +
+            "[]" +
+            "[]"));
+        pack();
+        setLocationRelativeTo(getOwner());
+        // JFormDesigner - End of component initialization  //GEN-END:initComponents
+    }
 }

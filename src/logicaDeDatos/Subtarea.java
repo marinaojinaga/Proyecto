@@ -8,7 +8,7 @@ package logicaDeDatos;
  * @version 2.0
  * @since 1.0
  */
-public class Subtarea extends TareaGeneral {
+public class Subtarea extends TareaGeneral implements iEnumAString{
 
 	/**
 	 * Crea una subtarea con los parámetros necesarios.
@@ -16,8 +16,14 @@ public class Subtarea extends TareaGeneral {
 	 * @param hecho Es un valor booleano de si la subtarea se encuentra hecha
 	 * @param prioridad Es un entero que va desde 0 hasta 4 mostrando la prioridad que tiene 
 	 */
-	public Subtarea(String nombre, boolean hecho, int prioridad) {
+	public Subtarea(String nombre, boolean hecho, Prioridad prioridad) {
 		super(nombre, hecho, prioridad);
+	}
+
+	@Override
+	public String deEnumAString() {
+		String s = getPrioridad().toString();
+		return s;
 	}
 
 	

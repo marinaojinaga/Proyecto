@@ -26,10 +26,9 @@ public abstract class TareaGeneral {
 	 * @param hecho Booleano que representa si la tarea está hecha.
 	 * @param prioridad Número entero que representa la prioridad de la tarea.
 	 */
-	public TareaGeneral(String nombre, boolean hecho, int prioridad) {
+	public TareaGeneral(String nombre, boolean hecho, Prioridad prioridad) {
 		this.nombre = nombre;
 		this.hecho = hecho;
-		
 		this.prioridad = prioridad;
 	}
 	
@@ -69,7 +68,7 @@ public abstract class TareaGeneral {
 	 * Devuelve el valor de prioridad, siendo este valor un entero
 	 * @return Un entero que representa la prioridad que tiene la tarea del 0 al 4
 	 */
-	public int getPrioridad() {
+	public Prioridad getPrioridad() {
 		return prioridad;
 	}
 	
@@ -77,7 +76,7 @@ public abstract class TareaGeneral {
 	 * Establece el valor de la prioridad que tiene la tarea
 	 * @param prioridad Entero de 0 a 4. Si se sale de estos parámetros devuelve error.
 	 */
-	public void setPrioridad(int prioridad) {
+	public void setPrioridad(Prioridad prioridad) {
 		this.prioridad = prioridad;
 		
 	}
