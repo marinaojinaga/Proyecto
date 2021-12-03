@@ -4,15 +4,19 @@ import java.awt.*;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JCheckBox;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import gestionBD.GestorBD;
+import logicaDeDatos.Prioridad;
+import logicaDeDatos.Subtarea;
+import logicaDeDatos.Tarea;
+import logicaNegocio.GestorFechas;
 import net.miginfocom.swing.*;
 
 public class VentanaCrearTarea extends JFrame {
@@ -26,7 +30,7 @@ public class VentanaCrearTarea extends JFrame {
 	private JTextField aaaaFechaRealizacion;
 	private JTextField ddFechaRealizacion;
 	private JTextField mmFechaRealizacion;
-	private JTextField prioridadTarea;
+	private JComboBox<Prioridad> prioridadTarea;
 
 	/**
 	 * Launch the application.
@@ -49,7 +53,7 @@ public class VentanaCrearTarea extends JFrame {
 	 */
 	public VentanaCrearTarea() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 992, 625);
+		setBounds(100, 100, 900, 608);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -163,31 +167,52 @@ public class VentanaCrearTarea extends JFrame {
 		lblNewLabel_3_1_1.setBounds(341, 388, 24, 23);
 		contentPane.add(lblNewLabel_3_1_1);
 		
-		prioridadTarea = new JTextField();
+		prioridadTarea = new JComboBox<Prioridad>();
 		prioridadTarea.setFont(new Font("Bookman Old Style", Font.PLAIN, 18));
-		prioridadTarea.setColumns(10);
+		Prioridad[] p = new Prioridad[]{Prioridad.Alta,Prioridad.Media,Prioridad.Baja};
+		prioridadTarea.setModel(new DefaultComboBoxModel(p));
 		prioridadTarea.setBounds(122, 166, 59, 29);
 		contentPane.add(prioridadTarea);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Hecho");
-		chckbxNewCheckBox.setHorizontalAlignment(SwingConstants.LEFT);
-		chckbxNewCheckBox.setFont(new Font("Bookman Old Style", Font.PLAIN, 30));
-		chckbxNewCheckBox.setBounds(683, 83, 127, 47);
-		contentPane.add(chckbxNewCheckBox);
+		JCheckBox hecho = new JCheckBox("Hecho");
+		hecho.setHorizontalAlignment(SwingConstants.LEFT);
+		hecho.setFont(new Font("Bookman Old Style", Font.PLAIN, 30));
+		hecho.setBounds(683, 83, 127, 47);
+		contentPane.add(hecho);
 		
 		JPanel panelSubtareas = new JPanel();
 		panelSubtareas.setBounds(628, 322, 289, 237);
 		contentPane.add(panelSubtareas);
 		
 		JButton btnCrearSubtarea = new JButton("Nueva Subtarea");
+		btnCrearSubtarea.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VentanaCrearSubtareas vCrearSub = new VentanaCrearSubtareas();
+				vCrearSub.setVisible(true);
+			}
+		});
 		btnCrearSubtarea.setFont(new Font("Bookman Old Style", Font.PLAIN, 13));
 		btnCrearSubtarea.setBounds(628, 557, 143, 23);
 		contentPane.add(btnCrearSubtarea);
 		
 		JButton btnConfirmarTarea = new JButton("Confirmar");
+		btnConfirmarTarea.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GestorFechas g = new GestorFechas();
+				Calendar fechaLimite = g.deStringsAFecha(ddFechaLimite.getText(),mmFechaLimite.getText(),aaaaFechaLimite.getText());
+				Calendar fechaRealizacion = g.deStringsAFecha(ddFechaRealizacion.getText(),mmFechaRealizacion.getText(),aaaaFechaRealizacion.getText());
+				ArrayList<Subtarea> s = new ArrayList<Subtarea>();
+				Tarea t = new Tarea(nombreTarea.getText(),hecho.isSelected(),(Prioridad) prioridadTarea.getSelectedItem(),DescripcionTarea.getText(),fechaLimite,fechaRealizacion,s);
+				GestorBD gestor = new GestorBD();
+				gestor.insertTarea(t);
+			}
+		});
 		btnConfirmarTarea.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		btnConfirmarTarea.setBounds(20, 515, 196, 35);
 		contentPane.add(btnConfirmarTarea);
+
 	}
 
     private void initComponents() {
