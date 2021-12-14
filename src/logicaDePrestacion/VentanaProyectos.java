@@ -1,5 +1,7 @@
 package logicaDePrestacion;
 
+import logicaDeDatos.Usuario;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -18,25 +20,9 @@ public class VentanaProyectos extends JFrame {
 	private JTextField nickUsuario;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaProyectos frame = new VentanaProyectos();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public VentanaProyectos() {
+	public VentanaProyectos(Usuario u) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 893, 583);
 		contentPane = new JPanel();

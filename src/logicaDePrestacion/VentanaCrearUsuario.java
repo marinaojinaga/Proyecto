@@ -1,15 +1,14 @@
 package logicaDePrestacion;
 
+import gestionBD.GestorBD;
+import logicaDeDatos.Usuario;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 
 public class VentanaCrearUsuario extends JFrame {
 
@@ -86,10 +85,16 @@ public class VentanaCrearUsuario extends JFrame {
 		mailUsuario.setBounds(273, 298, 413, 37);
 		contentPane.add(mailUsuario);
 		
-		JButton btnCrearUsuario = new JButton("Crear usuario");
-		btnCrearUsuario.setFont(new Font("Bookman Old Style", Font.PLAIN, 16));
-		btnCrearUsuario.setBounds(248, 365, 166, 45);
-		contentPane.add(btnCrearUsuario);
+		JButton CrearUsuario = new JButton("Crear usuario");
+		CrearUsuario.addActionListener(e -> {
+			Usuario u = new Usuario(nickUsuario.getText(),contrasena.getText(),nombreUsuario.getText(),mailUsuario.getText());
+			GestorBD g = new GestorBD();
+			g.insertUsuarios(u);
+			VentanaProyectos vProyectos = new VentanaProyectos(u);
+		});
+		CrearUsuario.setFont(new Font("Bookman Old Style", Font.PLAIN, 16));
+		CrearUsuario.setBounds(248, 365, 166, 45);
+		contentPane.add(CrearUsuario);
 		
 		JLabel lblNewLabel_1 = new JLabel("Crea un usuario nuevo");
 		lblNewLabel_1.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));

@@ -62,7 +62,7 @@ public class GestorBD {
                 + "    prioridad INTEGER NOT NULL,\n"
                 + "    descripcion VARCHAR NOT NULL,\n"
                 + "    fechaLimite TIMESTAMP NOT NULL,\n"
-                + "    fechaRealizacion TIMESTAMP NOT NULL\n"
+                + "    fechaRealizacion TIMESTAMP NOT NULL,\n"
                 + "    id_proyectos INTEGER NOT NULL, "
                 + "    FOREIGN KEY (id_proyectos) REFERENCES TablaProyectos(id_proyectos)"
                 + ");";
@@ -85,15 +85,26 @@ public class GestorBD {
         closeLink();
     }
 
+    private void CreateTableProyectoUsuario() throws SQLException {
+        conectarse();
+        String sql = "CREATE TABLE IF NOT EXISTS ProyectosUsuario (\n"
+                + "    ID_USUARIO INTEGER REFERENCES usuarios(ID) ON DELETE CASCADE,\n"
+                + "    ID_PROYECTO INTEGER REFERENCES PROYECTO(ID) ON DELETE CASCADE ,\n"
+                + "    PRIMARY KEY(ID_USUARIO,ID_PROYECTO)\n"
+                + ");";
+
+        ejecutarStatement(sql);
+        closeLink();
+    }
+
     private void createNewTableSubtareas() throws SQLException {
         conectarse();
-
         String sql = "CREATE TABLE IF NOT EXISTS TablaSubtareas (\n"
                 + "    id_subtareas INTEGER PRIMARY KEY,\n"
                 + "    nombre VARCHAR NOT NULL,\n"
                 + "    prioridad INTEGER NOT NULL,\n"
                 + "    hecho BIT NOT NULL,\n"
-                + "    FOREIGN KEY (id_tarea) REFERENCES TableTareas (id_tarea)"
+                + "    ID_TAREA INTEGER REFERENCES TableTareas (id_tarea) ON DELETE CASCADE"
                 + ");";
 
         ejecutarStatement(sql);
@@ -302,12 +313,66 @@ public class GestorBD {
         }
     }
 
+    public String getContrasena(String mail) {
+        String sql = "SELECT contrasena FROM usuarios WHERE mail = ?";
+        String s="";
+        try
+                (
+                        Connection conn = this.conectarse();
+                        PreparedStatement pstmt = conn.prepareStatement(sql);
+                )
+        {
+            pstmt.setString(1,mail);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next())
+            {
+                s = rs.getString("contrasena");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            s = "";
+        }
+        return s;
+    }
+
+    public Usuario getusuario(String mail) {
+        String sql = "SELECT id,nickUsuario,contrasena,nombre,mail FROM usuarios WHERE mail = ?";
+        Usuario u = new Usuario("","","","");
+        try
+                (
+                        Connection conn = this.conectarse();
+                        PreparedStatement pstmt = conn.prepareStatement(sql);
+                )
+        {
+            pstmt.setString(1,mail);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next())
+            {
+                u.setnickUsuario(rs.getString("nickUsuario"));
+                u.setContrasenya(rs.getString("contrasena"));
+                u.setNombre(rs.getString("nombre"));
+                u.setMail(rs.getString("mail"));
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return u;
+    }
+
     public static void main(String[] args) throws SQLException{
         GestorBD gestorBD = new GestorBD();
         gestorBD.createNewTableProyecto();
         gestorBD.createNewTableSubtareas();
         gestorBD.createNewTableTareas();
         gestorBD.createNewTableUsuario();
+        gestorBD.CreateTableProyectoUsuario();
+        Usuario u = new Usuario("marinaOjinaga","123456","Marina","marinaojinaga@opendeusto.es");
+        System.out.println(gestorBD.getContrasena("marinaojinaga@opendeusto.es"));
+        gestorBD.insertUsuarios(u);
     }
 
 }
