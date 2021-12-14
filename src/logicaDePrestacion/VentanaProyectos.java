@@ -1,18 +1,14 @@
 package logicaDePrestacion;
 
+import logicaDeDatos.Proyecto;
 import logicaDeDatos.Usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
 
 public class VentanaProyectos extends JFrame {
 
@@ -59,5 +55,8 @@ public class VentanaProyectos extends JFrame {
 		btnBorrarproyecto.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		btnBorrarproyecto.setBounds(578, 241, 265, 47);
 		contentPane.add(btnBorrarproyecto);
+
+		DefaultListModel<Proyecto> listaProyectos = new DefaultListModel<Proyecto>();
+
 	}
 }

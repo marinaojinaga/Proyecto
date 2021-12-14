@@ -6,7 +6,9 @@ import logicaDeDatos.Tarea;
 import logicaDeDatos.Usuario;
 import logicaNegocio.GestorArrayLists;
 
+import javax.swing.*;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class GestorBD {
     Connection conn = null;
@@ -363,6 +365,75 @@ public class GestorBD {
         return u;
     }
 
+    public int getIdUsuario(String mail) {
+        String sql = "SELECT id FROM usuarios WHERE mail = ?";
+        int i = 0;
+        try
+                (
+                        Connection conn = this.conectarse();
+                        PreparedStatement pstmt = conn.prepareStatement(sql);
+                )
+        {
+            pstmt.setString(1,mail);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next())
+            {
+                i = rs.getInt("id");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return i;
+    }
+
+    public ArrayList<Integer> proyectosDeUnUsuario(int idUsuario){
+        DefaultListModel<Proyecto> proyectos = new DefaultListModel<Proyecto>();
+        ArrayList<Integer> idsProyecto = new ArrayList<Integer>();
+        String sql = "SELECT id FROM ProyectosUsuarios WHERE ID_USUARIO = ?";
+        int i = 0;
+        try
+                (
+                        Connection conn = this.conectarse();
+                        PreparedStatement pstmt = conn.prepareStatement(sql);
+                )
+        {
+            pstmt.setInt(1,idUsuario);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next())
+            {
+                idsProyecto.add(rs.getInt("Id_Proyecto"));
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return idsProyecto;
+    }
+
+    public DefaultListModel<Proyecto> getProyectosDeUnUsuario(){
+        String sql = "SELECT id FROM ProyectosUsuarios WHERE ID_USUARIO = ?";
+        try
+                (
+                        Connection conn = this.conectarse();
+                        PreparedStatement pstmt = conn.prepareStatement(sql);
+                )
+        {
+            pstmt.setInt(1,idUsuario);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next())
+            {
+                idsProyecto.add(rs.getInt("Id_Proyecto"));
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) throws SQLException{
         GestorBD gestorBD = new GestorBD();
         gestorBD.createNewTableProyecto();

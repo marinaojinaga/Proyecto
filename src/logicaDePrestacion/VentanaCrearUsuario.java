@@ -91,6 +91,8 @@ public class VentanaCrearUsuario extends JFrame {
 			GestorBD g = new GestorBD();
 			g.insertUsuarios(u);
 			VentanaProyectos vProyectos = new VentanaProyectos(u);
+			vProyectos.setVisible(true);
+			VentanaCrearUsuario.this.setVisible(false);
 		});
 		CrearUsuario.setFont(new Font("Bookman Old Style", Font.PLAIN, 16));
 		CrearUsuario.setBounds(248, 365, 166, 45);
