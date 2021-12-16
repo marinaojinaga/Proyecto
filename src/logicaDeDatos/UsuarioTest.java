@@ -16,7 +16,7 @@ public class UsuarioTest {
 	
 	@Before
 	public void setUp(){
-		usuario = new Usuario(null, null, null, null);
+		usuario = new Usuario(null, null, null, null,0);
 	}
 	
 	@After

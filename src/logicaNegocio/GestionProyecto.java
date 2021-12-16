@@ -1,4 +1,4 @@
-package logicaNegocio;
+/*package logicaNegocio;
 
 import logicaDeDatos.Prioridad;
 import logicaDeDatos.Usuario;
@@ -14,15 +14,14 @@ import logicaDeDatos.Tarea;
  * @version 1
  * @since 1
  */
-public class GestionProyecto {
-	
-	
+/*public class GestionProyecto {
+
 	/**
 	 * Añade una nueva tarea a la lista de tareas de un proyecto
 	 * @param p Es el proyecto al que vamos a añadir la tarea
 	 * @param t Es la tarea que queremos añadir al proyecto
 	 */
-	public void anyadirTarea(Proyecto p, Tarea t){
+	/*public void anyadirTarea(Proyecto p, Tarea t){
 		ArrayList<Tarea> tProyecto = p.getTareas();
 		tProyecto.add(t);
 		p.setTareas(tProyecto);
@@ -33,7 +32,7 @@ public class GestionProyecto {
 	 * @param p Es el proyecto al que podemos 
 	 * @param u Es el usuario al que queremos dar acceso al proyecto p.
 	 */
-	public ArrayList<Usuario> anyadirUsuario(Proyecto p, Usuario u) {
+	/*public ArrayList<Usuario> anyadirUsuario(Proyecto p, Usuario u) {
 		ArrayList<Usuario> us = p.getUsuarios();
 		us.add(u);
 		p.setUsuarios(us);
@@ -45,7 +44,7 @@ public class GestionProyecto {
 	 * @param p Es el proyecto al que le quitaremos una tarea
 	 * @param t Es la tarea que queremos quitar.
 	 */
-	public void quitarTarea(Proyecto p, Tarea t) {
+	/*public void quitarTarea(Proyecto p, Tarea t) {
 		ArrayList<Tarea> tQuitar= p.getTareas();
 		tQuitar.remove(t);
 		p.setTareas(tQuitar);
@@ -56,7 +55,7 @@ public class GestionProyecto {
 	 * @param p Es el proyecto al que vamos a quitar un usuario
 	 * @param u Es el usuario que vamos a quitar del proyecto
 	 */
-	public void quitarUsuario(Proyecto p, Usuario u) {
+	/*public void quitarUsuario(Proyecto p, Usuario u) {
 		ArrayList<Usuario> usuarioQuitar = p.getUsuarios();
 		usuarioQuitar.remove(u);
 		p.setUsuarios(usuarioQuitar);
@@ -67,7 +66,7 @@ public class GestionProyecto {
 	 * @param t El proyecto del que vamos a ordenar las distintas tareas
 	 * @return La lista de tareas ya ordenada
 	 */
-	public ArrayList<Tarea> ordenarTareasXPrioridad(Proyecto t) {
+/*	public ArrayList<Tarea> ordenarTareasXPrioridad(Proyecto t) {
 		ArrayList<Tarea> tareas= t.getTareas();
 		ArrayList<Tarea> tareasOrdenadas = new ArrayList<Tarea>();
 
@@ -96,7 +95,7 @@ public class GestionProyecto {
 	 * @param p Es el proyecto del que vamos a ordenar las distintas tareas
 	 * @return La lista de tareas del proyecto ya ordenadas
 	 */
-	public ArrayList<Tarea> ordenarSiHecho(Proyecto p){
+	/*public ArrayList<Tarea> ordenarSiHecho(Proyecto p){
 		ArrayList<Tarea> tareas = p.getTareas();
 		ArrayList<Tarea> tareasOrdenadas = new ArrayList<Tarea>();
 		for(int i=0; i<tareas.size();i++) {
@@ -112,3 +111,4 @@ public class GestionProyecto {
 		return tareasOrdenadas;
 	}
 }
+	 */

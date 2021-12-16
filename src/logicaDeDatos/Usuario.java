@@ -7,13 +7,15 @@ public class Usuario {
 	private String contrasena;
 	private String nombre;
 	private String mail;
+	private int id_usuario;
 	
-	public Usuario(String nickUsuario, String contrasena, String nombre, String mail) {
+	public Usuario(String nickUsuario, String contrasena, String nombre, String mail,int id_usuario) {
 		super();
 		this.nickUsuario = nickUsuario;
 		this.contrasena = contrasena;
 		this.nombre = nombre;
 		this.mail = mail;
+		this.id_usuario =id_usuario;
 	}
 
 	public String getnickUsuario() {
@@ -46,6 +48,14 @@ public class Usuario {
 
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	public int getId_usuario(){
+		return id_usuario;
+	}
+
+	public void setId_usuario(int id_usuario){
+		this.id_usuario = id_usuario;
 	}
 
 

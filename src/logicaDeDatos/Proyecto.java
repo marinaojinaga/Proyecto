@@ -6,15 +6,16 @@ import java.util.ArrayList;
 public class Proyecto {
 	private String nombre;
 	private boolean favorito;
-	private ArrayList<Usuario> usuarios;
-	private ArrayList<Tarea> tareas;
+	private int id_proyecto;
+	private int id_usuario;
 	
-	public Proyecto(String nombre, boolean favorito, ArrayList<Usuario> usuarios, ArrayList<Tarea> tareas) {
+	public Proyecto(String nombre, boolean favorito,int id_proyecto,int id_usuario) {
 		super();
 		this.nombre = nombre;
 		this.favorito = favorito;
-		this.usuarios = usuarios;
-		this.tareas = tareas;
+		this.id_proyecto = id_proyecto;
+		this.id_usuario = id_usuario;
+
 	}
 
 	public String getNombre() {
@@ -33,20 +34,20 @@ public class Proyecto {
 		this.favorito = favorito;
 	}
 
-	public ArrayList<Usuario> getUsuarios() {
-		return usuarios;
+	public int getId_proyecto(){
+		return id_proyecto;
 	}
 
-	public void setUsuarios(ArrayList<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	public void setId_proyecto(int id_proyecto){
+		this.id_proyecto = id_proyecto;
 	}
 
-	public ArrayList<Tarea> getTareas() {
-		return tareas;
+	public int getId_usuario(){
+		return id_usuario;
 	}
 
-	public void setTareas(ArrayList<Tarea> tareas) {
-		this.tareas = tareas;
+	public void setId_usuario(int id_usuario){
+		this.id_usuario = id_usuario;
 	}
 	
 }

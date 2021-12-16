@@ -53,30 +53,38 @@ public class GestorBD {
         }
     }
 
+    private void verNombre () throws SQLException {
+        conectarse();
+        DatabaseMetaData md = conn.getMetaData();
+        ResultSet rs = md.getTables(null, null, "%", null);
+        while (rs.next()) {
+            System.out.println(rs.getString(3));
+        }
+        closeLink();
+    }
+
     //CREATE TABLES
     private void createNewTableTareas() throws SQLException {
         conectarse();
 
-        String sql = "CREATE TABLE IF NOT EXISTS TablaTareas (\n"
-                + "    id_table INTEGER PRIMARY KEY,\n"
-                + "    nombre VARCHAR NOT NULL,\n"
-                + "    hecho BIT NOT NULL,\n"
-                + "    prioridad INTEGER NOT NULL,\n"
-                + "    descripcion VARCHAR NOT NULL,\n"
-                + "    fechaLimite TIMESTAMP NOT NULL,\n"
-                + "    fechaRealizacion TIMESTAMP NOT NULL,\n"
-                + "    id_proyectos INTEGER NOT NULL, "
-                + "    FOREIGN KEY (id_proyectos) REFERENCES TablaProyectos(id_proyectos)"
+        String sql = "CREATE TABLE IF NOT EXISTS TAREAS (\n"
+                + "    ID_TAREAS INTEGER PRIMARY KEY,\n"
+                + "    nombre TEXT NOT NULL,\n"
+                + "    hecho INTEGER NOT NULL,\n"
+                + "    prioridad TEXT NOT NULL,\n"
+                + "    descripcion TEXT NOT NULL,\n"
+                + "    ID_PROYECTOS INTEGER REFERENCES PROYECTOS(ID_PROYECTOS) ON DELETE CASCADE "
                 + ");";
 
         ejecutarStatement(sql);
         closeLink();
     }
+
     private void createNewTableUsuario() throws SQLException {
         conectarse();
 
         String sql = "CREATE TABLE IF NOT EXISTS usuarios (\n"
-                +" id INTEGER PRIMARY KEY, \n"
+                +" ID_USUARIOS INTEGER PRIMARY KEY, \n"
                 + "nickUsuario TEXT NOT NULL, \n"
                 + "contrasena TEXT NOT NULL, \n"
                 + "nombre TEXT NOT NULL, \n"
@@ -87,26 +95,15 @@ public class GestorBD {
         closeLink();
     }
 
-    private void CreateTableProyectoUsuario() throws SQLException {
-        conectarse();
-        String sql = "CREATE TABLE IF NOT EXISTS ProyectosUsuario (\n"
-                + "    ID_USUARIO INTEGER REFERENCES usuarios(ID) ON DELETE CASCADE,\n"
-                + "    ID_PROYECTO INTEGER REFERENCES PROYECTO(ID) ON DELETE CASCADE ,\n"
-                + "    PRIMARY KEY(ID_USUARIO,ID_PROYECTO)\n"
-                + ");";
-
-        ejecutarStatement(sql);
-        closeLink();
-    }
 
     private void createNewTableSubtareas() throws SQLException {
         conectarse();
-        String sql = "CREATE TABLE IF NOT EXISTS TablaSubtareas (\n"
-                + "    id_subtareas INTEGER PRIMARY KEY,\n"
-                + "    nombre VARCHAR NOT NULL,\n"
-                + "    prioridad INTEGER NOT NULL,\n"
-                + "    hecho BIT NOT NULL,\n"
-                + "    ID_TAREA INTEGER REFERENCES TableTareas (id_tarea) ON DELETE CASCADE"
+        String sql = "CREATE TABLE IF NOT EXISTS SUBTAREAS (\n"
+                + "    ID_SUBTAREAS INTEGER PRIMARY KEY,\n"
+                + "    nombre TEXT NOT NULL,\n"
+                + "    prioridad TEXT NOT NULL,\n"
+                + "    hecho INTEGER NOT NULL,\n"
+                + "    ID_TAREA INTEGER REFERENCES TAREAS (ID_TAREAS) ON DELETE CASCADE"
                 + ");";
 
         ejecutarStatement(sql);
@@ -116,13 +113,49 @@ public class GestorBD {
     private void createNewTableProyecto() throws SQLException{
         conectarse();
 
-        String sql = "CREATE TABLE IF NOT EXISTS proyectos (\n"
-                +" id INTEGER PRIMARY KEY, \n"
-                + "nombre TEXT NOT NULL, \n"
-                + "favorito INTEGER NOT NULL, \n"
-                + "usuarios TEXT NOT NULL, \n"
-                + "tareas TEXT NOT NULL \n"
+        String sql = "CREATE TABLE IF NOT EXISTS PROYECTOS (\n"
+                +" ID_PROYECTOS INTEGER PRIMARY KEY, \n"
+                + "NOMBRE TEXT NOT NULL, \n"
+                + "FAVORITO INTEGER NOT NULL, \n"
+                + "ID_USUARIO INTEGER REFERENCES USUARIOS(ID) ON DELETE CASCADE"
                 + ");";
+
+        ejecutarStatement(sql);
+        closeLink();
+    }
+
+    //BORRAR TABLAS
+    private void deleteTareas() throws SQLException {
+        conectarse();
+
+        String sql = "DROP TABLE Tareas;";
+
+        ejecutarStatement(sql);
+        closeLink();
+    }
+
+    private void deleteSubtareas() throws SQLException {
+        conectarse();
+
+        String sql = "DROP TABLE SUBTAREAS;";
+
+        ejecutarStatement(sql);
+        closeLink();
+    }
+
+    private void deleteProyectos() throws SQLException {
+        conectarse();
+
+        String sql = "DROP TABLE PROYECTOS;";
+
+        ejecutarStatement(sql);
+        closeLink();
+    }
+
+    private void deleteUsuarios() throws SQLException {
+        conectarse();
+
+        String sql = "DROP TABLE USUARIOS;";
 
         ejecutarStatement(sql);
         closeLink();
@@ -132,25 +165,21 @@ public class GestorBD {
     public void insertTarea(Tarea t)
     {
         conectarse();
-        String sql = "INSERT INTO tareas(nombre,hecho,prioridad,descripcion,fechaLimite,fechaRealizacion,subtareas)"
-                +"VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO tareas(nombre,hecho,prioridad,descripcion,ID_PROYECTOS)"
+                +"VALUES(?,?,?,?,?)";
 
         try
                 (
                         PreparedStatement pstmt = conn.prepareStatement(sql)
                         )
         {
-            Date d2 = (Date)t.getFechaRealizacion().getTime();
-            Date d1 = (Date) t.getFechaLimite().getTime();
             GestorArrayLists g = new GestorArrayLists();
 
             pstmt.setString(1,t.getNombre());
             pstmt.setBoolean(2, t.isHecho());
             pstmt.setString(3,t.deEnumAString());
             pstmt.setString(4, t.getDescripcion());
-            pstmt.setDate(5,d1);
-            pstmt.setDate(6,d2);
-            pstmt.setString(7,g.ArrayListSubtareas(t.getSubtareas()));
+            pstmt.setInt(5,t.getId_proyecto());
             pstmt.executeUpdate();
             closeLink();
 
@@ -183,7 +212,7 @@ public class GestorBD {
 
     public void insertSubtareas(Subtarea s){
         conectarse();
-        String sql = "INSERT INTO subtareas(nombre,hecho,prioridad) VALUES (?,?,?)";
+        String sql = "INSERT INTO subtareas(nombre,hecho,prioridad,id_tarea) VALUES (?,?,?,?)";
         try(
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 )
@@ -191,6 +220,7 @@ public class GestorBD {
             pstmt.setString(1,s.getNombre());
             pstmt.setBoolean(2,s.isHecho());
             pstmt.setString(3,s.deEnumAString());
+            pstmt.setInt(4,s.getId_tarea());
             pstmt.executeUpdate();
             closeLink();
         }catch (SQLException e) {
@@ -200,7 +230,7 @@ public class GestorBD {
 
     public void insertProyecto(Proyecto p){
         conectarse();
-        String sql = "INSERT INTO proyectos(nombre,favorito,usuarios,tareas) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO proyectos(nombre,favorito,id_usuario) VALUES (?,?,?)";
         try(
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 )
@@ -208,8 +238,7 @@ public class GestorBD {
             GestorArrayLists g = new GestorArrayLists();
             pstmt.setString(1,p.getNombre());
             pstmt.setBoolean(2,p.isFavorito());
-            pstmt.setString(3,g.ArrayListUsuarios(p.getUsuarios()));
-            pstmt.setString(4,g.ArrayListTareas(p.getTareas()));
+            pstmt.setInt(3,p.getId_usuario());
             pstmt.executeUpdate();
             closeLink();
         }catch (SQLException e){
@@ -218,8 +247,9 @@ public class GestorBD {
     }
 
     //SELECTS
-    public void selectTareas() throws SQLException{
-        String sql = "SELECT id,nombre, hecho,prioridad,descripcion,fechaLimite,fechaRealizacion,subtareas FROM tareas";
+    public ArrayList<String> selectTareas() throws SQLException{
+        String sql = "SELECT id_tarea,nombre, hecho,prioridad,descripcion,id_proyectos FROM TAREAS";
+        ArrayList<String> s = new ArrayList<String>();
         try
                 (
                         Connection conn = this.conectarse();
@@ -228,24 +258,24 @@ public class GestorBD {
                         )
         {
             while(rs.next()){
-                System.out.println(
-                        rs.getInt("id") + "\t"+
+                s.add(
+                        rs.getInt("id_tarea")+ "\t"+
                         rs.getString("nombre")+ "\t"+
                         rs.getInt("hecho")+ "\t"+
-                        rs.getInt("prioridad")+ "\t"+
+                        rs.getString("prioridad")+ "\t"+
                         rs.getString("descripcion")+ "\t"+
-                        rs.getDate("fechaLimite")+ "\t"+
-                        rs.getDate("fechaRealizacion")+ "\t"+
-                        rs.getString("subtareas"));
+                        rs.getInt("id_proyectos")+ "\t");
             }
         }
         catch (SQLException e){
             System.out.println(e.getMessage());
         }
+        return s;
     }
 
-    public void selectUsuario() throws SQLException{
-        String sql = "SELECT id,nickUsuario,contrasena,nombre,mail FROM usuarios";
+    public ArrayList<String> selectUsuario() throws SQLException{
+        String sql = "SELECT id_usuarios,nickUsuario,contrasena,nombre,mail FROM usuarios";
+        ArrayList<String> r = new ArrayList<String>();
         try
                 (
                         Connection conn = this.conectarse();
@@ -255,8 +285,8 @@ public class GestorBD {
         {
             while (rs.next())
             {
-                System.out.println(
-                        rs.getInt("id") + "\t" +
+                r.add(
+                                rs.getInt("id_usuarios") + "\t" +
                                 rs.getString("nickUsuario") + "\t" +
                                 rs.getString("contrasena") + "\t" +
                                 rs.getString("nombre") + "\t" +
@@ -266,10 +296,12 @@ public class GestorBD {
         catch (SQLException e){
             e.printStackTrace();
         }
+        return r;
     }
 
-    public void selectSubtareas(){
-        String sql = "SELECT id,nombre,hecho,prioridad FROM subtareas";
+    public ArrayList<String> selectSubtareas(){
+        String sql = "SELECT id_subtareas,nombre,prioridad,hecho,id_tarea FROM subtareas";
+        ArrayList<String > s = new ArrayList<String>();
         try
                 (
                         Connection conn = this.conectarse();
@@ -278,21 +310,24 @@ public class GestorBD {
                         )
         {
             while (rs.next()){
-                System.out.println(
-                        rs.getInt("id")+"\t"+
+                s.add(
+                        rs.getInt("id_subtareas")+"\t"+
                         rs.getString("nombre")+"\t"+
                         rs.getInt("hecho")+"\t"+
-                        rs.getInt("prioridad")
+                        rs.getString("prioridad") +"\t"+
+                        rs.getInt("id_tarea")
                 );
             }
         }
         catch (SQLException e){
             e.printStackTrace();
         }
+        return s;
     }
 
-    public void selectProyecto(){
-        String sql = "SELECT id,nombre,favorito,usuarios,tareas FROM proyectos";
+    public ArrayList<String> selectProyecto(){
+        String sql = "SELECT id_proyectos,nombre,favorito,id_usuario FROM proyectos";
+        ArrayList<String> s = new ArrayList<String>();
         try
                 (
                         Connection conn = this.conectarse();
@@ -301,18 +336,18 @@ public class GestorBD {
                         )
         {
             while (rs.next()){
-                System.out.println(
-                        rs.getInt("id")+"/t"+
+                s.add(
+                        rs.getInt("id_proyectos")+"/t"+
                         rs.getString("nombre")+"/t"+
                         rs.getInt("favorito")+"/t"+
-                        rs.getString("usuarios")+"/t"+
-                        rs.getString("tareas")
+                        rs.getInt("id_usuario")
                 );
             }
         }
         catch (SQLException e){
             e.getStackTrace();
         }
+        return s;
     }
 
     public String getContrasena(String mail) {
@@ -341,7 +376,7 @@ public class GestorBD {
 
     public Usuario getusuario(String mail) {
         String sql = "SELECT id,nickUsuario,contrasena,nombre,mail FROM usuarios WHERE mail = ?";
-        Usuario u = new Usuario("","","","");
+        Usuario u = new Usuario("","","","",0);
         try
                 (
                         Connection conn = this.conectarse();
@@ -388,62 +423,14 @@ public class GestorBD {
         return i;
     }
 
-    public ArrayList<Integer> proyectosDeUnUsuario(int idUsuario){
-        DefaultListModel<Proyecto> proyectos = new DefaultListModel<Proyecto>();
-        ArrayList<Integer> idsProyecto = new ArrayList<Integer>();
-        String sql = "SELECT id FROM ProyectosUsuarios WHERE ID_USUARIO = ?";
-        int i = 0;
-        try
-                (
-                        Connection conn = this.conectarse();
-                        PreparedStatement pstmt = conn.prepareStatement(sql);
-                )
-        {
-            pstmt.setInt(1,idUsuario);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next())
-            {
-                idsProyecto.add(rs.getInt("Id_Proyecto"));
-            }
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return idsProyecto;
-    }
-
-    public DefaultListModel<Proyecto> getProyectosDeUnUsuario(){
-        String sql = "SELECT id FROM ProyectosUsuarios WHERE ID_USUARIO = ?";
-        try
-                (
-                        Connection conn = this.conectarse();
-                        PreparedStatement pstmt = conn.prepareStatement(sql);
-                )
-        {
-            pstmt.setInt(1,idUsuario);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next())
-            {
-                idsProyecto.add(rs.getInt("Id_Proyecto"));
-            }
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
     public static void main(String[] args) throws SQLException{
         GestorBD gestorBD = new GestorBD();
-        gestorBD.createNewTableProyecto();
-        gestorBD.createNewTableSubtareas();
-        gestorBD.createNewTableTareas();
-        gestorBD.createNewTableUsuario();
-        gestorBD.CreateTableProyectoUsuario();
-        Usuario u = new Usuario("marinaOjinaga","123456","Marina","marinaojinaga@opendeusto.es");
-        System.out.println(gestorBD.getContrasena("marinaojinaga@opendeusto.es"));
-        gestorBD.insertUsuarios(u);
+        Usuario ceci = new Usuario("CeciliaOjinaga","123","Cecilia","ceci@test.com",1);
+        Usuario marina = new Usuario("MarinaOjinaga","456","Marina","marina@test.com",2);
+        Usuario ane = new Usuario("AneOjinaga","789","Ane","ane@test.com",3);
+        gestorBD.insertUsuarios(ceci);
+        gestorBD.insertUsuarios(marina);
+        gestorBD.insertUsuarios(ane);
     }
 
 }

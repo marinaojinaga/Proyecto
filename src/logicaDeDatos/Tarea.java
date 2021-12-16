@@ -14,36 +14,28 @@ public class Tarea extends TareaGeneral implements iEnumAString{
 	/**Descripcion de la tarea 0
 	 */
 	private String descripcion;
-	
-	/**Fecha limite en la que hay que entregar la tarea o quieres tenerla hecha
-	 */
-	private Calendar fechaLimite;
-	
-	/** Fecha en la que planeas hacer la tarea
-	 */
-	private Calendar fechaRealizacion;
-	
+
+	private int id_tarea;
+
 	/** Lista de subtareas incluidas dentro de una tarea
 	 */
-	private ArrayList<Subtarea> subtareas;
+	private int id_proyecto;
+
 	
 	/**
 	 * Crea una tarea con los parámetros siguientes
 	 * @param nombre String con el nombre que tendra la tarea. Parametro heradado de TareaGeneral.
 	 * @param hecho Booleano que representa si se ha hecho la tarea. Parametro hereado de TareaGeneral.
-	 * @param prioridad Entero del 0 al 4 con la prioridad de la tarea. Parametro herado de TareaGeneral.
+	 * @param prioridad Enumerado que tiene tres posibles valores que son Alta, Media y Baja. Parametro herado de TareaGeneral.
 	 * @param descripcion String con una breve descripcion de la tarea.
-	 * @param fechaLimite Tipo Calendar que indica la fecha limite de realizacion de la tarea.
-	 * @param fechaRealizacion Tipo Calendar que indica la fecha en la qeu planeas hacer la tarea
-	 * @param subtareas ArrayList que contendrá las subtareas de una tarea
+	 * @param id_tarea Entero de la tarea.
+	 * @param id_proyecto Entero que se refiere a la clase
 	 */
-	public Tarea(String nombre, boolean hecho, Prioridad prioridad, String descripcion, Calendar fechaLimite,
-			Calendar fechaRealizacion, ArrayList<Subtarea> subtareas) {
+	public Tarea(String nombre, boolean hecho, Prioridad prioridad, String descripcion, int id_tarea,int id_proyecto) {
 		super(nombre, hecho, prioridad);
 		this.descripcion = descripcion;
-		this.fechaLimite = fechaLimite;
-		this.fechaRealizacion = fechaRealizacion;
-		this.subtareas = subtareas;
+		this.id_tarea = id_tarea;
+		this.id_proyecto = id_proyecto;
 	}
 
 	/**
@@ -62,54 +54,19 @@ public class Tarea extends TareaGeneral implements iEnumAString{
 		this.descripcion = descripcion;
 	}
 
-	/**
-	 * Devuelve la fecha limite en la que tienes que tener hecho algo
-	 * @return fechaLimite de tipo Calendar
-	 */
-	public Calendar getFechaLimite() {
-		return fechaLimite;
+	public int getId_tarea(){
+		return id_tarea;
+	}
+	public void setId_tarea(int id_tarea){
+		this.id_tarea = id_tarea;
 	}
 
-	/**
-	 * Establece la fecha limite de una tarea
-	 * @param fechaLimite es una variable de tipo Calendar
-	 */
-	public void setFechaLimite(Calendar fechaLimite) {
-		this.fechaLimite = fechaLimite;
+	public int getId_proyecto(){
+		return id_proyecto;
 	}
-
-	/**
-	 * Devuelve la fecha de realizacion de una tarea
-	 * @return fechaRealizacion de tipo Calendar
-	 */
-	public Calendar getFechaRealizacion() {
-		return fechaRealizacion;
+	public void setId_proyecto(int id_proyecto){
+		this.id_proyecto = id_proyecto;
 	}
-
-	/**
-	 * Establece la fecha en la que has pensado realizar una tarea
-	 * @param fechaRealizacion de tipo Calendar
-	 */
-	public void setFechaRealizacion(Calendar fechaRealizacion) {
-		this.fechaRealizacion = fechaRealizacion;
-	}
-
-	/**
-	 * Devuelve la lista de subtareas que tiene una tarea
-	 * @return un arraylist que contiene subtareas al que llamamos subtareas
-	 */
-	public ArrayList<Subtarea> getSubtareas() {
-		return subtareas;
-	}
-
-	/**
-	 * Establece la lista de subtareas dentro de una tarea
-	 * @param subtareas que es un arraylist de subtareas.
-	 */
-	public void setSubtareas(ArrayList<Subtarea> subtareas) {
-		this.subtareas = subtareas;
-	}
-
 
 	@Override
 	public String deEnumAString() {

@@ -197,18 +197,18 @@ public class VentanaCrearTarea extends JFrame {
 		contentPane.add(btnCrearSubtarea);
 		
 		JButton btnConfirmarTarea = new JButton("Confirmar");
-		btnConfirmarTarea.addActionListener(new ActionListener() {
+		/*btnConfirmarTarea.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GestorFechas g = new GestorFechas();
 				Calendar fechaLimite = g.deStringsAFecha(ddFechaLimite.getText(),mmFechaLimite.getText(),aaaaFechaLimite.getText());
 				Calendar fechaRealizacion = g.deStringsAFecha(ddFechaRealizacion.getText(),mmFechaRealizacion.getText(),aaaaFechaRealizacion.getText());
 				ArrayList<Subtarea> s = new ArrayList<Subtarea>();
-				Tarea t = new Tarea(nombreTarea.getText(),hecho.isSelected(),(Prioridad) prioridadTarea.getSelectedItem(),DescripcionTarea.getText(),fechaLimite,fechaRealizacion,s);
+				Tarea t = new Tarea(nombreTarea.getText(),hecho.isSelected(),(Prioridad) prioridadTarea.getSelectedItem(),DescripcionTarea.getText());
 				GestorBD gestor = new GestorBD();
 				gestor.insertTarea(t);
-			}
-		});
+
+		});}*/
 		btnConfirmarTarea.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 		btnConfirmarTarea.setBounds(20, 515, 196, 35);
 		contentPane.add(btnConfirmarTarea);
