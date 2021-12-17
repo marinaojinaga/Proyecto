@@ -337,9 +337,9 @@ public class GestorBD {
         {
             while (rs.next()){
                 s.add(
-                        rs.getInt("id_proyectos")+"/t"+
-                        rs.getString("nombre")+"/t"+
-                        rs.getInt("favorito")+"/t"+
+                        rs.getInt("id_proyectos")+"\t"+
+                        rs.getString("nombre")+"\t"+
+                        rs.getInt("favorito")+"\t"+
                         rs.getInt("id_usuario")
                 );
             }
@@ -425,12 +425,25 @@ public class GestorBD {
 
     public static void main(String[] args) throws SQLException{
         GestorBD gestorBD = new GestorBD();
-        Usuario ceci = new Usuario("CeciliaOjinaga","123","Cecilia","ceci@test.com",1);
-        Usuario marina = new Usuario("MarinaOjinaga","456","Marina","marina@test.com",2);
-        Usuario ane = new Usuario("AneOjinaga","789","Ane","ane@test.com",3);
-        gestorBD.insertUsuarios(ceci);
-        gestorBD.insertUsuarios(marina);
-        gestorBD.insertUsuarios(ane);
+        Proyecto p1 = new Proyecto("Macro", true,1,1);
+        Proyecto p2 = new Proyecto("Practicas",false,2,1);
+        Proyecto p3 = new Proyecto("Inglés",false,3,1);
+        Proyecto p4 = new Proyecto("Program",true,4,2);
+        Proyecto p5 = new Proyecto("Clases",false,5,2);
+        Proyecto p6 = new Proyecto("Frances",true,6,2);
+        Proyecto p7 = new Proyecto("Mates",false,7,3);
+        Proyecto p8 = new Proyecto("Lengua",true,8,3);
+        Proyecto p9 = new Proyecto("Alemas",false,9,3);
+        gestorBD.insertProyecto(p1);
+        gestorBD.insertProyecto(p2);
+        gestorBD.insertProyecto(p3);
+        gestorBD.insertProyecto(p4);
+        gestorBD.insertProyecto(p5);
+        gestorBD.insertProyecto(p6);
+        gestorBD.insertProyecto(p7);
+        gestorBD.insertProyecto(p8);
+        gestorBD.insertProyecto(p9);
+
     }
 
 }
