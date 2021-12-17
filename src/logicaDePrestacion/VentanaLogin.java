@@ -57,30 +57,26 @@ public class VentanaLogin extends JFrame{
         contentPane.add(lblNewLabel_1);
 
         JLabel lblNewLabel_2 = new JLabel("Contrase\u00F1a");
-        lblNewLabel_2.setBounds(10, 95, 98, 14);
+        lblNewLabel_2.setBounds(10, 95, 65, 14);
         contentPane.add(lblNewLabel_2);
 
         JButton crearUsuario = new JButton("Crear usuario");
-        crearUsuario.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                VentanaCrearUsuario ventanaCrearUsuario = new VentanaCrearUsuario();
-                ventanaCrearUsuario.setVisible(true);
-                VentanaLogin.this.setVisible(false);
-            }
+        crearUsuario.addActionListener(e -> {
         });
         crearUsuario.setBounds(147, 232, 122, 23);
         contentPane.add(crearUsuario);
 
+        GestorBD gestorBD = new GestorBD();
         JButton Acceder = new JButton("Acceder");
-        Acceder.addActionListener(new ActionListener() {
+       Acceder.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if(coincide(email.getText(),contrasena.getText())){
-                        VentanaProyectos vProyectos = new VentanaProyectos(getUsuario(email.getText()));
+                        VentanaProyectos vProyectos = new VentanaProyectos(gestorBD.getusuario(email.getText()));
                         vProyectos.setVisible(true);
                         VentanaLogin.this.setVisible(false);
                     }else{
-                        JOptionPane.showMessageDialog(VentanaLogin.this, "Email y/o contraseña invalidos");
+                        JOptionPane.showMessageDialog(VentanaLogin.this, "Contraseña y/o mail invalidos");
                     }
                 } catch (SQLException ex) {
                     ex.printStackTrace();
@@ -106,28 +102,15 @@ public class VentanaLogin extends JFrame{
      */
     public boolean coincide(String email, String contrasena) throws SQLException {
         boolean respuesta = false;
-        ExtraerBD e = new ExtraerBD();
-        ArrayList<Usuario> usuarios = e.extraerUsuarios();
-        for(int i=0;i<usuarios.size();i++){
-            if(usuarios.get(i).getMail().equals(email)){
-                if(usuarios.get(i).getContrasena().equals(contrasena)){
-                    respuesta = true;
-                }
-                break;
+        GestorBD g = new GestorBD();
+        if (email.equals("")){
+            respuesta = false;
+        }else{
+            Usuario u = g.getusuario(email);
+            if(u.getContrasena().equals(contrasena)){
+                respuesta = true;
             }
         }
         return respuesta;
-    }
-
-    public Usuario getUsuario(String mail) throws SQLException{
-        ExtraerBD e = new ExtraerBD();
-        ArrayList<Usuario> usuarios = e.extraerUsuarios();
-        Usuario r = null;
-        for(int i=0;i<usuarios.size();i++){
-            if(usuarios.get(i).getMail().equals(mail)){
-                r = usuarios.get(i);
-            }
-        }
-        return r;
     }
 }

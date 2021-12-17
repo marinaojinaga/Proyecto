@@ -2,25 +2,15 @@ package logicaNegocio;
 
 import gestionBD.GestorBD;
 import logicaDeDatos.*;
+import logicaDePrestacion.VentanaLogin;
 
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ExtraerBD {
     GestorBD g = new GestorBD();
-
-    public ArrayList<Usuario> extraerUsuarios() throws SQLException {
-        ArrayList<String> s = new ArrayList<String>();
-        ArrayList<Usuario> u = new ArrayList<Usuario>();
-        s = g.selectUsuario();
-        for(int i=0;i<s.size();i++){
-            String[] r = s.get(i).split("\\s+");
-            Usuario ux = new Usuario(r[1],r[2],r[3],r[4],Integer.parseInt(r[0]));
-            u.add(ux);
-        }
-     return u;
-    }
 
     public ArrayList<Tarea> extraerTareas() throws SQLException{
         ArrayList<String> s = new ArrayList<String>();
@@ -77,6 +67,11 @@ public class ExtraerBD {
             p = Prioridad.Baja;
         }
         return p;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        ExtraerBD e = new ExtraerBD();
+
     }
 
 }

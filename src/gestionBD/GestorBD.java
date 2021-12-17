@@ -273,9 +273,9 @@ public class GestorBD {
         return s;
     }
 
-    public ArrayList<String> selectUsuario() throws SQLException{
+    public ArrayList<Usuario> selectUsuario() throws SQLException{
         String sql = "SELECT id_usuarios,nickUsuario,contrasena,nombre,mail FROM usuarios";
-        ArrayList<String> r = new ArrayList<String>();
+        ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
         try
                 (
                         Connection conn = this.conectarse();
@@ -285,18 +285,20 @@ public class GestorBD {
         {
             while (rs.next())
             {
-                r.add(
-                                rs.getInt("id_usuarios") + "\t" +
-                                rs.getString("nickUsuario") + "\t" +
-                                rs.getString("contrasena") + "\t" +
-                                rs.getString("nombre") + "\t" +
-                                rs.getString("mail"));
+
+                int id = rs.getInt("id_usuarios");
+                String nick = rs.getString("nickUsuario");
+                String contra = rs.getString("contrasena");
+                String nombre = rs.getString("nombre");
+                String mail = rs.getString("mail");
+                Usuario u = new Usuario(nick,contra,nombre,mail,id);
+                usuarios.add(u);
             }
         }
         catch (SQLException e){
             e.printStackTrace();
         }
-        return r;
+        return usuarios;
     }
 
     public ArrayList<String> selectSubtareas(){
@@ -375,7 +377,7 @@ public class GestorBD {
     }
 
     public Usuario getusuario(String mail) {
-        String sql = "SELECT id,nickUsuario,contrasena,nombre,mail FROM usuarios WHERE mail = ?";
+        String sql = "SELECT ID_USUARIOS,nickUsuario,contrasena,nombre,mail FROM usuarios WHERE mail = ?";
         Usuario u = new Usuario("","","","",0);
         try
                 (
@@ -392,6 +394,7 @@ public class GestorBD {
                 u.setContrasenya(rs.getString("contrasena"));
                 u.setNombre(rs.getString("nombre"));
                 u.setMail(rs.getString("mail"));
+                u.setId_usuario(rs.getInt("ID_USUARIOS"));
             }
         }
         catch (SQLException e){
