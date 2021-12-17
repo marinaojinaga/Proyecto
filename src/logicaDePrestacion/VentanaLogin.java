@@ -57,14 +57,8 @@ public class VentanaLogin extends JFrame{
         contentPane.add(lblNewLabel_1);
 
         JLabel lblNewLabel_2 = new JLabel("Contrase\u00F1a");
-        lblNewLabel_2.setBounds(10, 95, 65, 14);
+        lblNewLabel_2.setBounds(10, 95, 80, 14);
         contentPane.add(lblNewLabel_2);
-
-        JButton crearUsuario = new JButton("Crear usuario");
-        crearUsuario.addActionListener(e -> {
-        });
-        crearUsuario.setBounds(147, 232, 122, 23);
-        contentPane.add(crearUsuario);
 
         GestorBD gestorBD = new GestorBD();
         JButton Acceder = new JButton("Acceder");

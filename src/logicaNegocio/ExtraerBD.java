@@ -12,17 +12,6 @@ import java.util.Arrays;
 public class ExtraerBD {
     GestorBD g = new GestorBD();
 
-    public ArrayList<Tarea> extraerTareas() throws SQLException{
-        ArrayList<String> s = new ArrayList<String>();
-        ArrayList<Tarea> t = new ArrayList<Tarea>();
-        s = g.selectTareas();
-        for(int i=0;i<s.size();i++){
-            String[] r = s.get(i).split("\\s+");
-            Tarea p = new Tarea(r[1],deStringABoolean(r[2]),deStringAPrioridad(r[3]),r[4],Integer.parseInt(r[0]),Integer.parseInt(r[5]));
-            t.add(p);
-        }
-        return t;
-    }
 
     public ArrayList<Subtarea> extraerSubtareas() throws SQLException{
         ArrayList<String> s = new ArrayList<String>();
@@ -34,17 +23,6 @@ public class ExtraerBD {
             subtareas.add(sub);
         }
         return subtareas;
-    }
-    public ArrayList<Proyecto> extraerProyecto() throws SQLException{
-        ArrayList<String> s = new ArrayList<String>();
-        ArrayList<Proyecto> proyectos = new ArrayList<Proyecto>();
-        s = g.selectProyecto();
-        for(int i=0;i<s.size();i++){
-            String[] r = s.get(i).split("\\s+");
-            Proyecto p = new Proyecto(r[1], deStringABoolean(r[2]),Integer.parseInt(r[0]),Integer.parseInt(r[3]));
-            proyectos.add(p);
-        }
-        return proyectos;
     }
 
     public boolean deStringABoolean(String a){
@@ -71,7 +49,13 @@ public class ExtraerBD {
 
     public static void main(String[] args) throws SQLException {
         ExtraerBD e = new ExtraerBD();
-
+        //IMPRIMIR LOS USUARIOS QUE TENGO
+        GestorBD gestor = new GestorBD();
+        ArrayList<Proyecto> array = gestor.selectProyecto();
+        ArrayList<Usuario> ux = gestor.selectUsuario();
+        for(int i=0; i<ux.size();i++){
+            System.out.println(ux.get(i).getId_usuario());
+        }
     }
 
 }

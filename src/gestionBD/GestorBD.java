@@ -1,9 +1,7 @@
 package gestionBD;
 
-import logicaDeDatos.Proyecto;
-import logicaDeDatos.Subtarea;
-import logicaDeDatos.Tarea;
-import logicaDeDatos.Usuario;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import logicaDeDatos.*;
 import logicaNegocio.GestorArrayLists;
 
 import javax.swing.*;
@@ -247,9 +245,9 @@ public class GestorBD {
     }
 
     //SELECTS
-    public ArrayList<String> selectTareas() throws SQLException{
-        String sql = "SELECT id_tarea,nombre, hecho,prioridad,descripcion,id_proyectos FROM TAREAS";
-        ArrayList<String> s = new ArrayList<String>();
+    public ArrayList<Tarea> selectTareas() throws SQLException{
+        String sql = "SELECT id_tareas,nombre, hecho,prioridad,descripcion,id_proyectos FROM TAREAS";
+        ArrayList<Tarea> s = new ArrayList<Tarea>();
         try
                 (
                         Connection conn = this.conectarse();
@@ -258,13 +256,14 @@ public class GestorBD {
                         )
         {
             while(rs.next()){
-                s.add(
-                        rs.getInt("id_tarea")+ "\t"+
-                        rs.getString("nombre")+ "\t"+
-                        rs.getInt("hecho")+ "\t"+
-                        rs.getString("prioridad")+ "\t"+
-                        rs.getString("descripcion")+ "\t"+
-                        rs.getInt("id_proyectos")+ "\t");
+                        int id_tarea = rs.getInt("id_tareas");
+                        String nombre = rs.getString("nombre");
+                        boolean hecho = rs.getBoolean("hecho");
+                        Prioridad prioridad = deStringAPrioridad(rs.getString("prioridad"));
+                        String descripcion = rs.getString("descripcion");
+                        int id_proyectos = rs.getInt("id_proyectos");
+                        Tarea t = new Tarea(nombre,hecho,prioridad,descripcion,id_tarea,id_proyectos);
+                        s.add(t);
             }
         }
         catch (SQLException e){
@@ -327,9 +326,9 @@ public class GestorBD {
         return s;
     }
 
-    public ArrayList<String> selectProyecto(){
+    public ArrayList<Proyecto> selectProyecto(){
         String sql = "SELECT id_proyectos,nombre,favorito,id_usuario FROM proyectos";
-        ArrayList<String> s = new ArrayList<String>();
+        ArrayList<Proyecto> s = new ArrayList<Proyecto>();
         try
                 (
                         Connection conn = this.conectarse();
@@ -338,12 +337,13 @@ public class GestorBD {
                         )
         {
             while (rs.next()){
-                s.add(
-                        rs.getInt("id_proyectos")+"\t"+
-                        rs.getString("nombre")+"\t"+
-                        rs.getInt("favorito")+"\t"+
-                        rs.getInt("id_usuario")
-                );
+
+                int id_proyecto = rs.getInt("id_proyectos");
+                String nombre = rs.getString("nombre");
+                boolean favorito = rs.getBoolean("favorito");
+                int id_usuario = rs.getInt("id_usuario");
+                Proyecto proyecto = new Proyecto(nombre,favorito,id_proyecto,id_usuario);
+                s.add(proyecto);
             }
         }
         catch (SQLException e){
@@ -426,27 +426,35 @@ public class GestorBD {
         return i;
     }
 
+    public void eliminarUsuario(int id) {
+        String sql = "DELETE FROM usuarios WHERE id_usuarios = ?";
+        try (Connection conn = this.conectarse();
+                PreparedStatement pstm = conn.prepareStatement(sql)) {
+            pstm.setInt(1, id);
+            pstm.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static void main(String[] args) throws SQLException{
         GestorBD gestorBD = new GestorBD();
-        Proyecto p1 = new Proyecto("Macro", true,1,1);
-        Proyecto p2 = new Proyecto("Practicas",false,2,1);
-        Proyecto p3 = new Proyecto("Inglés",false,3,1);
-        Proyecto p4 = new Proyecto("Program",true,4,2);
-        Proyecto p5 = new Proyecto("Clases",false,5,2);
-        Proyecto p6 = new Proyecto("Frances",true,6,2);
-        Proyecto p7 = new Proyecto("Mates",false,7,3);
-        Proyecto p8 = new Proyecto("Lengua",true,8,3);
-        Proyecto p9 = new Proyecto("Alemas",false,9,3);
-        gestorBD.insertProyecto(p1);
-        gestorBD.insertProyecto(p2);
-        gestorBD.insertProyecto(p3);
-        gestorBD.insertProyecto(p4);
-        gestorBD.insertProyecto(p5);
-        gestorBD.insertProyecto(p6);
-        gestorBD.insertProyecto(p7);
-        gestorBD.insertProyecto(p8);
-        gestorBD.insertProyecto(p9);
+        gestorBD.eliminarUsuario(4);
+        gestorBD.eliminarUsuario(5);
+        gestorBD.eliminarUsuario(6);
+        gestorBD.eliminarUsuario(7);
+    }
 
+    public Prioridad deStringAPrioridad(String a){
+        Prioridad p = Prioridad.Baja;
+        if(a.equals("Alta")){
+            p = Prioridad.Alta;
+        }else if(a.equals("Media")){
+            p = Prioridad.Media;
+        }else if(a.equals("Baja")){
+            p = Prioridad.Baja;
+        }
+        return p;
     }
 
 }
