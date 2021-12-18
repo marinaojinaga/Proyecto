@@ -49,5 +49,10 @@ public class Proyecto {
 	public void setId_usuario(int id_usuario){
 		this.id_usuario = id_usuario;
 	}
+
+	@Override
+	public String toString(){
+		return getNombre();
+	}
 	
 }

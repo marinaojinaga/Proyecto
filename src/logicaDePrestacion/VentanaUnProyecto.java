@@ -25,7 +25,7 @@ public class VentanaUnProyecto extends JFrame {
     /**
      * Create the frame.
      */
-    public VentanaUnProyecto(Proyecto proyecto) throws SQLException {
+    public VentanaUnProyecto(Proyecto proyectoP) throws SQLException {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
@@ -34,18 +34,18 @@ public class VentanaUnProyecto extends JFrame {
         contentPane.setLayout(null);
 
         nombreProyecto = new JTextField();
-        nombreProyecto.setText(proyecto.getNombre());
+        nombreProyecto.setText(proyectoP.getNombre());
         nombreProyecto.setEditable(false);
         nombreProyecto.setBounds(10, 11, 172, 32);
         contentPane.add(nombreProyecto);
         nombreProyecto.setColumns(10);
 
         JCheckBox favorito = new JCheckBox("Favorito");
-        favorito.setSelected(proyecto.isFavorito());
+        favorito.setSelected(proyectoP.isFavorito());
         favorito.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                proyecto.setFavorito(favorito.isSelected());
+                proyectoP.setFavorito(favorito.isSelected());
             }
         });
         favorito.setBounds(270, 16, 97, 23);
@@ -55,7 +55,7 @@ public class VentanaUnProyecto extends JFrame {
         DefaultListModel<Tarea> tareasUx = new DefaultListModel<Tarea>();
         ArrayList<Tarea> tareas = gestorBD.selectTareas();
         for(int i=0; i<tareas.size();i++){
-            if(tareas.get(i).getId_proyecto() == proyecto.getId_proyecto()){
+            if(tareas.get(i).getId_proyecto() == proyectoP.getId_proyecto()){
                 tareasUx.addElement(tareas.get(i));
             }
         }
@@ -76,6 +76,9 @@ public class VentanaUnProyecto extends JFrame {
         JButton nuevaTarea = new JButton("Nueva tarea");
         nuevaTarea.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                VentanaCrearTarea ventanaCrearTarea = new VentanaCrearTarea(proyectoP);
+                ventanaCrearTarea.setVisible(true);
+                VentanaUnProyecto.this.setVisible(false);
             }
         });
         nuevaTarea.setBounds(274, 204, 154, 23);

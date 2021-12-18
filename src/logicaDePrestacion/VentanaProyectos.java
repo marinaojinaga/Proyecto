@@ -42,7 +42,7 @@ public class VentanaProyectos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaProyectos(Usuario usuario) {
+	public VentanaProyectos(Usuario usuariox) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -54,7 +54,7 @@ public class VentanaProyectos extends JFrame {
 		DefaultListModel<Proyecto> proyectosUsuario = new DefaultListModel<Proyecto>();
 		ArrayList<Proyecto> proyectos = gestorBD.selectProyecto();
 		for(int i=0;i<proyectos.size();i++){
-			if(proyectos.get(i).getId_usuario()==usuario.getId_usuario()) {
+			if(proyectos.get(i).getId_usuario()==usuariox.getId_usuario()) {
 				proyectosUsuario.addElement(proyectos.get(i));
 			}
 		}
@@ -88,17 +88,14 @@ public class VentanaProyectos extends JFrame {
 		JButton btnNewButton = new JButton("Nuevo proyecto");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Usuario x = usuariox;
+				VentanaCrearProyecto ventanaCrearProyecto = new VentanaCrearProyecto(x);
+				ventanaCrearProyecto.setVisible(true);
+				VentanaProyectos.this.setVisible(false);
 			}
 		});
 		btnNewButton.setBounds(259, 89, 127, 23);
 		contentPane.add(btnNewButton);
 
-		JButton btnBorrarProyecto = new JButton("Borrar proyecto");
-		btnBorrarProyecto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnBorrarProyecto.setBounds(259, 133, 127, 23);
-		contentPane.add(btnBorrarProyecto);
 	}
 }

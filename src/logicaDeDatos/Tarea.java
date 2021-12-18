@@ -74,4 +74,8 @@ public class Tarea extends TareaGeneral implements iEnumAString{
 		return s;
 	}
 
+	@Override
+	public String toString(){
+		return getNombre();
+	}
 }
