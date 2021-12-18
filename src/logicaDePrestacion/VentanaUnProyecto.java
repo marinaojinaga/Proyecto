@@ -46,6 +46,8 @@ public class VentanaUnProyecto extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 proyectoP.setFavorito(favorito.isSelected());
+                GestorBD g = new GestorBD();
+                g.updateProyecto(favorito.isSelected(),proyectoP.getId_proyecto());
             }
         });
         favorito.setBounds(270, 16, 97, 23);
@@ -68,6 +70,9 @@ public class VentanaUnProyecto extends JFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 Tarea t = (Tarea)list.getSelectedValue();
+                VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(t);
+                ventanaVisionTarea.setVisible(true);
+                VentanaUnProyecto.this.setVisible(false);
             }
         });
         scrollPane.setViewportView(list);
@@ -76,6 +81,8 @@ public class VentanaUnProyecto extends JFrame {
         JButton nuevaTarea = new JButton("Nueva tarea");
         nuevaTarea.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                GestorBD g = new GestorBD();
+                g.updateProyecto(favorito.isSelected(),proyectoP.getId_proyecto());
                 VentanaCrearTarea ventanaCrearTarea = new VentanaCrearTarea(proyectoP);
                 ventanaCrearTarea.setVisible(true);
                 VentanaUnProyecto.this.setVisible(false);
@@ -83,6 +90,7 @@ public class VentanaUnProyecto extends JFrame {
         });
         nuevaTarea.setBounds(274, 204, 154, 23);
         contentPane.add(nuevaTarea);
+
     }
 }
 

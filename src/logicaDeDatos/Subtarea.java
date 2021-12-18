@@ -46,5 +46,9 @@ public class Subtarea extends TareaGeneral implements iEnumAString{
 		return s;
 	}
 
+	@Override
+	public String toString(){
+		return getNombre();
+	}
 	
 }

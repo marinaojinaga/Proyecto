@@ -13,18 +13,6 @@ public class ExtraerBD {
     GestorBD g = new GestorBD();
 
 
-    public ArrayList<Subtarea> extraerSubtareas() throws SQLException{
-        ArrayList<String> s = new ArrayList<String>();
-        ArrayList<Subtarea> subtareas = new ArrayList<Subtarea>();
-        s = g.selectSubtareas();
-        for(int i=0;i<s.size();i++){
-            String[] r = s.get(i).split("\\s+ ");
-            Subtarea sub = new Subtarea(r[1], deStringABoolean(r[2]),deStringAPrioridad(r[3]),Integer.parseInt(r[0]),Integer.parseInt(r[4]));
-            subtareas.add(sub);
-        }
-        return subtareas;
-    }
-
     public boolean deStringABoolean(String a){
         boolean b;
         if(Integer.parseInt(a) == 0){

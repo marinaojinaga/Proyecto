@@ -1,6 +1,9 @@
 package logicaDePrestacion;
 
+import gestionBD.GestorBD;
 import logicaDeDatos.Prioridad;
+import logicaDeDatos.Subtarea;
+import logicaDeDatos.Tarea;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -21,25 +24,9 @@ public class VentanaCrearSubtareas extends JFrame {
     private JTextField nombre;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    VentanaCrearSubtareas frame = new VentanaCrearSubtareas();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Create the frame.
      */
-    public VentanaCrearSubtareas() {
+    public VentanaCrearSubtareas(Tarea t) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
@@ -78,6 +65,12 @@ public class VentanaCrearSubtareas extends JFrame {
         JButton confirmar = new JButton("Confirmar");
         confirmar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                GestorBD gestorBD = new GestorBD();
+                Subtarea subtarea = new Subtarea(nombre.getText(),chckbxNewCheckBox.isSelected(),(Prioridad) prioridadSubtarea.getSelectedItem(),0,t.getId_tarea());
+                gestorBD.insertSubtareas(subtarea);
+                VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(t);
+                ventanaVisionTarea.setVisible(true);
+                VentanaCrearSubtareas.this.setVisible(false);
             }
         });
         confirmar.setBounds(303, 148, 125, 23);

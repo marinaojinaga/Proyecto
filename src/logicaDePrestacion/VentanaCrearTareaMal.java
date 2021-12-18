@@ -181,8 +181,8 @@ public class VentanaCrearTareaMal extends JFrame {
 		btnCrearSubtarea.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VentanaCrearSubtareas vCrearSub = new VentanaCrearSubtareas();
-				vCrearSub.setVisible(true);
+				//VentanaCrearSubtareas vCrearSub = new VentanaCrearSubtareas();
+				//vCrearSub.setVisible(true);
 			}
 		});
 		btnCrearSubtarea.setFont(new Font("Bookman Old Style", Font.PLAIN, 13));

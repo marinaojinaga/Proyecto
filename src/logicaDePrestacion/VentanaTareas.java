@@ -1,5 +1,7 @@
 package logicaDePrestacion;
 
+import gestionBD.GestorBD;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -9,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class VentanaTareas extends JFrame {
 
@@ -66,6 +70,15 @@ public class VentanaTareas extends JFrame {
 		btnModificarTarea.setFont(new Font("Bookman Old Style", Font.PLAIN, 25));
 		btnModificarTarea.setBounds(536, 329, 242, 48);
 		contentPane.add(btnModificarTarea);
+
+		JButton atras = new JButton("Atras");
+		atras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GestorBD g = new GestorBD();
+			}
+		});
+		atras.setBounds(349, 50, 89, 23);
+		contentPane.add(atras);
 	}
 
 }

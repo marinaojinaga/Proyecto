@@ -95,7 +95,7 @@ public class GestorBD {
 
 
     private void createNewTableSubtareas() throws SQLException {
-        conectarse();
+        conn = conectarse();
         String sql = "CREATE TABLE IF NOT EXISTS SUBTAREAS (\n"
                 + "    ID_SUBTAREAS INTEGER PRIMARY KEY,\n"
                 + "    nombre TEXT NOT NULL,\n"
@@ -109,7 +109,7 @@ public class GestorBD {
     }
 
     private void createNewTableProyecto() throws SQLException{
-        conectarse();
+        conn = conectarse();
 
         String sql = "CREATE TABLE IF NOT EXISTS PROYECTOS (\n"
                 +" ID_PROYECTOS INTEGER PRIMARY KEY, \n"
@@ -300,9 +300,9 @@ public class GestorBD {
         return usuarios;
     }
 
-    public ArrayList<String> selectSubtareas(){
+    public ArrayList<Subtarea> selectSubtareas(){
         String sql = "SELECT id_subtareas,nombre,prioridad,hecho,id_tarea FROM subtareas";
-        ArrayList<String > s = new ArrayList<String>();
+        ArrayList<Subtarea > s = new ArrayList<Subtarea>();
         try
                 (
                         Connection conn = this.conectarse();
@@ -311,13 +311,13 @@ public class GestorBD {
                         )
         {
             while (rs.next()){
-                s.add(
-                        rs.getInt("id_subtareas")+"\t"+
-                        rs.getString("nombre")+"\t"+
-                        rs.getInt("hecho")+"\t"+
-                        rs.getString("prioridad") +"\t"+
-                        rs.getInt("id_tarea")
-                );
+                        int id_subtarea = rs.getInt("id_subtareas");
+                        String nombre = rs.getString("nombre");
+                        Boolean hecho = rs.getBoolean("hecho");
+                        Prioridad prioridad = deStringAPrioridad(rs.getString("prioridad"));
+                        int id_tarea = rs.getInt("id_tarea");
+                        Subtarea subtarea = new Subtarea(nombre,hecho,prioridad,id_subtarea,id_tarea);
+                        s.add(subtarea);
             }
         }
         catch (SQLException e){
@@ -439,10 +439,7 @@ public class GestorBD {
 
     public static void main(String[] args) throws SQLException{
         GestorBD gestorBD = new GestorBD();
-        gestorBD.eliminarUsuario(4);
-        gestorBD.eliminarUsuario(5);
-        gestorBD.eliminarUsuario(6);
-        gestorBD.eliminarUsuario(7);
+        gestorBD.updateProyecto(true,5);
     }
 
     public Prioridad deStringAPrioridad(String a){
@@ -455,6 +452,52 @@ public class GestorBD {
             p = Prioridad.Baja;
         }
         return p;
+    }
+
+    //UPDATES
+    public void updateProyecto(boolean favorito, int id_proyecto){
+        String sql = "UPDATE PROYECTOS SET favorito = ? WHERE id_proyectos = ?";
+        try
+                (
+                        Connection conn = this.conectarse();
+                        PreparedStatement pstmt = conn.prepareStatement(sql);
+                        )
+        {
+            pstmt.setBoolean(1,favorito);
+            pstmt.setInt(2,id_proyecto);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void updateTareas(boolean hecho, Prioridad p, int id_tarea){
+        String sql = "UPDATE TAREAS SET hecho = ?, prioridad = ? WHERE id_tareas = ?";
+        try(
+                Connection conn = this.conectarse();
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                )
+        {
+            pstmt.setBoolean(1,hecho);
+            pstmt.setString(2,p.toString());
+            pstmt.setInt(3,id_tarea);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updateSubtareas(boolean hecho, Prioridad p, int id_subtarea){
+        String sql = "UPDATE SUBTAREAS SET hecho = ?, prioridad = ? WHERE id_subtareas = ?";
+        try(
+                Connection conn = this.conectarse();
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+        )
+        {
+            pstmt.setBoolean(1,hecho);
+            pstmt.setString(2,p.toString());
+            pstmt.setInt(3,id_subtarea);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
 }
