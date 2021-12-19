@@ -98,7 +98,7 @@ public class VentanaVisionTarea extends JFrame {
             }
         }
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(253, 75, 175, 147);
+        scrollPane.setBounds(253, 75, 175, 122);
         contentPane.add(scrollPane);
 
         JList list = new JList();
@@ -113,6 +113,33 @@ public class VentanaVisionTarea extends JFrame {
         });
         scrollPane.setViewportView(list);
         list.setModel(subtareas);
+
+        JComboBox ordenar = new JComboBox();
+        ordenar.addItem("......");
+        ordenar.addItem("Orden alfabético");
+        ordenar.addItem("Tareas no hechas arriba");
+        ordenar.addItem("Ordenar por prioridad");
+        ordenar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                QuickSort quickSort = new QuickSort();
+                DefaultListModel<Subtarea> subtareaOrdenada = new DefaultListModel<>();
+                if(ordenar.getSelectedItem().equals("Orden alfabético")){
+                    quickSort.QuickSortAlfabetico(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
+                }else if (ordenar.getSelectedItem().equals("Tareas no hechas arriba")){
+                    quickSort.QuickSortBooleanos(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
+                }else if(ordenar.getSelectedItem().equals("Ordenar por prioridad")){
+                    quickSort.QuickSortPrioridad(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
+                }
+                for(int i=0;i<subtareasPorcentaje.size();i++){
+                    subtareaOrdenada.addElement(subtareasPorcentaje.get(i));
+                }
+                list.setModel(subtareaOrdenada);
+            }
+        });
+        ordenar.setBounds(253, 197, 175, 22);
+        getContentPane().add(ordenar);
+
 
         JButton nuevaSubtarea = new JButton("Nueva subtarea");
         nuevaSubtarea.addActionListener(new ActionListener() {

@@ -2,6 +2,7 @@ package logicaDePrestacion;
 
 import gestionBD.GestorBD;
 import logicaDeDatos.Proyecto;
+import logicaDeDatos.QuickSort;
 import logicaDeDatos.Tarea;
 import logicaDeDatos.Usuario;
 import logicaNegocio.CalculadorHechoGenerico;
@@ -120,6 +121,31 @@ public class VentanaUnProyecto extends JFrame {
         atras.setBounds(339, 11, 89, 23);
         contentPane.add(atras);
 
+        JComboBox ordenar = new JComboBox();
+        ordenar.addItem("......");
+        ordenar.addItem("Orden alfabético");
+        ordenar.addItem("Tareas no hechas arriba");
+        ordenar.addItem("Ordenar por prioridad");
+        ordenar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                QuickSort quickSort = new QuickSort();
+                DefaultListModel<Tarea> tareaOrdenada = new DefaultListModel<Tarea>();
+                if(ordenar.getSelectedItem().equals("Orden alfabético")){
+                    quickSort.QuickSortAlfabetico(tareasPorcentaje,0,tareasPorcentaje.size()-1);
+                }else if (ordenar.getSelectedItem().equals("Tareas no hechas arriba")){
+                    quickSort.QuickSortBooleanos(tareasPorcentaje,0,tareasPorcentaje.size()-1);
+                }else if(ordenar.getSelectedItem().equals("Ordenar por prioridad")){
+                    quickSort.QuickSortPrioridad(tareasPorcentaje,0,tareasPorcentaje.size()-1);
+                }
+                for(int i=0;i<tareasPorcentaje.size();i++){
+                    tareaOrdenada.addElement(tareasPorcentaje.get(i));
+                }
+                list.setModel(tareaOrdenada);
+            }
+        });
+        ordenar.setBounds(10, 57, 219, 22);
+        getContentPane().add(ordenar);
     }
 }
 

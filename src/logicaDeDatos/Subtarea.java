@@ -8,7 +8,7 @@ package logicaDeDatos;
  * @version 2.0
  * @since 1.0
  */
-public class Subtarea extends TareaGeneral implements iEnumAString{
+public class Subtarea extends TareaGeneral implements iEnumAString,IComparable<Subtarea>{
 	int id_subtarea;
 	int id_tarea;
 
@@ -50,5 +50,48 @@ public class Subtarea extends TareaGeneral implements iEnumAString{
 	public String toString(){
 		return getNombre();
 	}
-	
+
+	@Override
+	public boolean compararAlfabetico(Subtarea objeto) {
+		boolean resultado= false;
+		int compare = objeto.getNombre().compareTo(this.getNombre());
+		if(compare<0)
+			resultado = true;
+		else if(compare>0)
+			resultado = false;
+		return resultado;
+	}
+
+	@Override
+	public boolean compararBool(Subtarea objeto) {
+		boolean resultado = false;
+		if (this.isHecho()&&!objeto.isHecho())
+			resultado = true;
+		if(!this.isHecho()&&objeto.isHecho())
+			resultado = false;
+		return resultado;
+	}
+
+	@Override
+	public boolean compararPrioridad(Subtarea objeto) {
+		boolean resultado = false;
+		int prioridadObjeto = dePrioridadAInt(objeto.getPrioridad());
+		int prioridadThis = dePrioridadAInt(this.getPrioridad());
+		if(prioridadObjeto>prioridadThis)
+			resultado = true;
+		else if(prioridadObjeto<prioridadThis){
+			resultado = false;
+		}
+		return resultado;
+	}
+	public int dePrioridadAInt(Prioridad p){
+		int prioridad = 1;
+		if(p.equals(Prioridad.Alta))
+			prioridad=3;
+		else if(p.equals(Prioridad.Media))
+			prioridad = 2;
+		else if(p.equals(Prioridad.Baja))
+			prioridad = 1;
+		return prioridad;
+	}
 }

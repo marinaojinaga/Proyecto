@@ -1,8 +1,5 @@
 package logicaDeDatos;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-
 /**
  * Representa una tarea. La clase extiende de la clase TareaGeneral.
  * @author Marina Ojinaga
@@ -80,13 +77,13 @@ public class Tarea extends TareaGeneral implements iEnumAString, IComparable<Tar
 	}
 
 	@Override
-	public int compararAlfabetico(Tarea objeto) {
-		int resultado=0;
+	public boolean compararAlfabetico(Tarea objeto) {
+		boolean resultado= false;
 		int compare = objeto.getNombre().compareTo(this.getNombre());
 		if(compare<0)
-			resultado = 1;
+			resultado = true;
 		else if(compare>0)
-			resultado = -1;
+			resultado = false;
 		return resultado;
 	}
 
@@ -94,24 +91,24 @@ public class Tarea extends TareaGeneral implements iEnumAString, IComparable<Tar
 	 * Ordena con los true abajo y los false arriba
 	 */
 	@Override
-	public int compararBool(Tarea objeto) {
-		int resultado = 0;
+	public boolean compararBool(Tarea objeto) {
+		boolean resultado = false;
 		if (this.isHecho()&&!objeto.isHecho())
-			resultado = -1;
+			resultado = true;
 		if(!this.isHecho()&&objeto.isHecho())
-			resultado = 1;
+			resultado = false;
 		return resultado;
 	}
 
 	@Override
-	public int compararPrioridad(Tarea objeto) {
-		int resultado = 0;
+	public boolean compararPrioridad(Tarea objeto) {
+		boolean resultado = false;
 		int prioridadObjeto = dePrioridadAInt(objeto.getPrioridad());
 		int prioridadThis = dePrioridadAInt(this.getPrioridad());
-		if(prioridadObjeto<prioridadThis)
-			resultado = 1;
-		else if(prioridadObjeto>prioridadThis){
-			resultado = -1;
+		if(prioridadObjeto>prioridadThis)
+			resultado = true;
+		else if(prioridadObjeto<prioridadThis){
+			resultado = false;
 		}
 		return resultado;
 	}

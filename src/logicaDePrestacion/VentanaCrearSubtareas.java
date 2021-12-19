@@ -56,6 +56,7 @@ public class VentanaCrearSubtareas extends JFrame {
         prioridadSubtarea.setBounds(127, 196, 115, 22);
         contentPane.add(prioridadSubtarea);
 
+
         JLabel lblNewLabel_2 = new JLabel("Prioridad");
         lblNewLabel_2.setBounds(10, 196, 107, 18);
         contentPane.add(lblNewLabel_2);
