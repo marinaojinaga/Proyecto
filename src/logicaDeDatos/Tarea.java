@@ -6,7 +6,7 @@ package logicaDeDatos;
  * @version 1.0
  * @since 1.0
  */
-public class Tarea extends TareaGeneral implements iEnumAString, IComparable<Tarea>{
+public class Tarea extends TareaGeneral implements iEnumAString, IComparableTareaGeneral<Tarea> {
 	
 	/**Descripcion de la tarea 0
 	 */

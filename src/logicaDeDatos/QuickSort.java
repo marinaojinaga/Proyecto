@@ -3,7 +3,7 @@ package logicaDeDatos;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class QuickSort <t extends IComparable<t>> implements IOrdenable<t>{
+public class QuickSort <t extends IComparableTareaGeneral<t>> implements IOrdenable<t>{
 
     public int partitionAlfabetico(ArrayList<t> a, int low, int high){
         t pivot = a.get(high);
@@ -45,29 +45,29 @@ public class QuickSort <t extends IComparable<t>> implements IOrdenable<t>{
     }
 
     @Override
-    public void QuickSortAlfabetico(ArrayList<t> ArrayList, int low, int high) {
+    public void SortAlfabetico(ArrayList<t> ArrayList, int low, int high) {
         if(low<high){
             int pivot_location=partitionAlfabetico(ArrayList,low,high);
-            QuickSortAlfabetico(ArrayList,low,pivot_location-1);
-            QuickSortAlfabetico(ArrayList,pivot_location+1,high);
+            SortAlfabetico(ArrayList,low,pivot_location-1);
+            SortAlfabetico(ArrayList,pivot_location+1,high);
         }
     }
 
     @Override
-    public void QuickSortPrioridad(ArrayList<t> ArrayList, int low, int high) {
+    public void SortPrioridad(ArrayList<t> ArrayList, int low, int high) {
         if(low<high){
             int pivot_location=partitionPrioridad(ArrayList,low,high);
-            QuickSortPrioridad(ArrayList,low,pivot_location-1);
-            QuickSortPrioridad(ArrayList,pivot_location+1,high);
+            SortPrioridad(ArrayList,low,pivot_location-1);
+            SortPrioridad(ArrayList,pivot_location+1,high);
         }
     }
 
     @Override
-    public void QuickSortBooleanos(ArrayList<t> ArrayList, int low, int high) {
+    public void SortBooleanos(ArrayList<t> ArrayList, int low, int high) {
         if(low<high){
             int pivot_location=partitionBoolean(ArrayList,low,high);
-            QuickSortBooleanos(ArrayList,low,pivot_location-1);
-            QuickSortBooleanos(ArrayList,pivot_location+1,high);
+            SortBooleanos(ArrayList,low,pivot_location-1);
+            SortBooleanos(ArrayList,pivot_location+1,high);
         }
     }
 
@@ -84,7 +84,7 @@ public class QuickSort <t extends IComparable<t>> implements IOrdenable<t>{
         introducir1.add(t3);
 
         QuickSort<Tarea> quickSort = new QuickSort<Tarea>();
-        quickSort.QuickSortAlfabetico(introducir1,0,introducir1.size()-1);
+        quickSort.SortAlfabetico(introducir1,0,introducir1.size()-1);
         for(int i=0;i<introducir1.size();i++){
             System.out.println(introducir1.get(i).getNombre());
         }

@@ -1,11 +1,11 @@
 package logicaDePrestacion;
 
-import com.sun.org.apache.xerces.internal.dom.DeferredAttrImpl;
 import gestionBD.GestorBD;
+import logicaDeDatos.MergeSort;
 import logicaDeDatos.Proyecto;
+import logicaDeDatos.QuickSort;
 import logicaDeDatos.Usuario;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.*;
@@ -53,9 +53,11 @@ public class VentanaProyectos extends JFrame {
 		GestorBD gestorBD = new GestorBD();
 		DefaultListModel<Proyecto> proyectosUsuario = new DefaultListModel<Proyecto>();
 		ArrayList<Proyecto> proyectos = gestorBD.selectProyecto();
+		ArrayList<Proyecto> proyectosAOrdenar = new ArrayList<Proyecto>();
 		for(int i=0;i<proyectos.size();i++){
 			if(proyectos.get(i).getId_usuario()==usuariox.getId_usuario()) {
 				proyectosUsuario.addElement(proyectos.get(i));
+				proyectosAOrdenar.add(proyectos.get(i));
 			}
 		}
 		JScrollPane scrollPane = new JScrollPane();
@@ -95,6 +97,30 @@ public class VentanaProyectos extends JFrame {
 		});
 		btnNewButton.setBounds(259, 89, 127, 23);
 		contentPane.add(btnNewButton);
+
+		JComboBox ordenar = new JComboBox();
+		ordenar.addItem("......");
+		ordenar.addItem("Orden alfabético");
+		ordenar.addItem("Favoritos arriba");
+		ordenar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MergeSort<Proyecto> mergeSort = new MergeSort<Proyecto>();
+				DefaultListModel<Proyecto> ProyectosOrdenados = new DefaultListModel<>();
+				ArrayList<Proyecto> proyectosOrdenados = new ArrayList<Proyecto>();
+				if(ordenar.getSelectedItem().equals("Orden alfabético")){
+					proyectosOrdenados = mergeSort.mergeSortAlfabetico(proyectosAOrdenar);
+				}else if (ordenar.getSelectedItem().equals("Favoritos arriba")){
+					proyectosOrdenados = mergeSort.mergeSortBoolean(proyectosAOrdenar);
+				}
+				for(int i=0;i<proyectosOrdenados.size();i++){
+					ProyectosOrdenados.addElement(proyectosOrdenados.get(i));
+				}
+				list.setModel(ProyectosOrdenados);
+			}
+		});
+		ordenar.setBounds(26, 41, 165, 22);
+		getContentPane().add(ordenar);
 
 	}
 }

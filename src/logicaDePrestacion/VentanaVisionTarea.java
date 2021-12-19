@@ -125,11 +125,11 @@ public class VentanaVisionTarea extends JFrame {
                 QuickSort quickSort = new QuickSort();
                 DefaultListModel<Subtarea> subtareaOrdenada = new DefaultListModel<>();
                 if(ordenar.getSelectedItem().equals("Orden alfabético")){
-                    quickSort.QuickSortAlfabetico(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
+                    quickSort.SortAlfabetico(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
                 }else if (ordenar.getSelectedItem().equals("Tareas no hechas arriba")){
-                    quickSort.QuickSortBooleanos(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
+                    quickSort.SortBooleanos(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
                 }else if(ordenar.getSelectedItem().equals("Ordenar por prioridad")){
-                    quickSort.QuickSortPrioridad(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
+                    quickSort.SortPrioridad(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
                 }
                 for(int i=0;i<subtareasPorcentaje.size();i++){
                     subtareaOrdenada.addElement(subtareasPorcentaje.get(i));

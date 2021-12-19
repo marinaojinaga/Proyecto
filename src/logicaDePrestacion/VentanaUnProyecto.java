@@ -90,8 +90,8 @@ public class VentanaUnProyecto extends JFrame {
             public void valueChanged(ListSelectionEvent e) {
                 Tarea t = (Tarea)list.getSelectedValue();
                 VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(t,proyectoP,usuario);
-                ventanaVisionTarea.setVisible(true);
                 VentanaUnProyecto.this.setVisible(false);
+                ventanaVisionTarea.setVisible(true);
             }
         });
         scrollPane.setViewportView(list);
@@ -132,11 +132,11 @@ public class VentanaUnProyecto extends JFrame {
                 QuickSort quickSort = new QuickSort();
                 DefaultListModel<Tarea> tareaOrdenada = new DefaultListModel<Tarea>();
                 if(ordenar.getSelectedItem().equals("Orden alfabético")){
-                    quickSort.QuickSortAlfabetico(tareasPorcentaje,0,tareasPorcentaje.size()-1);
+                    quickSort.SortAlfabetico(tareasPorcentaje,0,tareasPorcentaje.size()-1);
                 }else if (ordenar.getSelectedItem().equals("Tareas no hechas arriba")){
-                    quickSort.QuickSortBooleanos(tareasPorcentaje,0,tareasPorcentaje.size()-1);
+                    quickSort.SortBooleanos(tareasPorcentaje,0,tareasPorcentaje.size()-1);
                 }else if(ordenar.getSelectedItem().equals("Ordenar por prioridad")){
-                    quickSort.QuickSortPrioridad(tareasPorcentaje,0,tareasPorcentaje.size()-1);
+                    quickSort.SortPrioridad(tareasPorcentaje,0,tareasPorcentaje.size()-1);
                 }
                 for(int i=0;i<tareasPorcentaje.size();i++){
                     tareaOrdenada.addElement(tareasPorcentaje.get(i));

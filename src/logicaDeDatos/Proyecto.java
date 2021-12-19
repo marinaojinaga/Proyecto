@@ -3,7 +3,7 @@ package logicaDeDatos;
 
 import java.util.ArrayList;
 
-public class Proyecto {
+public class Proyecto implements IComparableProyecto<Proyecto>{
 	private String nombre;
 	private boolean favorito;
 	private int id_proyecto;
@@ -54,5 +54,25 @@ public class Proyecto {
 	public String toString(){
 		return getNombre();
 	}
-	
+
+	@Override
+	public boolean compararAlfabetico(Proyecto objeto) {
+		boolean resultado= false;
+		int compare = objeto.getNombre().compareTo(this.getNombre());
+		if(compare<0)
+			resultado = true;
+		else if(compare>0)
+			resultado = false;
+		return resultado;
+	}
+
+	@Override
+	public boolean compararBool(Proyecto objeto) {
+		boolean resultado = true;
+		if (this.isFavorito()&&!objeto.isFavorito())
+			resultado = false;
+		if(!this.isFavorito()&&objeto.isFavorito())
+			resultado = true;
+		return resultado;
+	}
 }

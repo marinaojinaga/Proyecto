@@ -8,7 +8,7 @@ package logicaDeDatos;
  * @version 2.0
  * @since 1.0
  */
-public class Subtarea extends TareaGeneral implements iEnumAString,IComparable<Subtarea>{
+public class Subtarea extends TareaGeneral implements iEnumAString, IComparableTareaGeneral<Subtarea> {
 	int id_subtarea;
 	int id_tarea;
 
