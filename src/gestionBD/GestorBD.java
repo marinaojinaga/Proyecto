@@ -456,45 +456,51 @@ public class GestorBD {
 
     //UPDATES
     public void updateProyecto(boolean favorito, int id_proyecto){
-        String sql = "UPDATE PROYECTOS SET favorito = ? WHERE id_proyectos = ?";
+        conectarse();
+        String sql = "UPDATE PROYECTOS SET FAVORITO = ? WHERE ID_PROYECTOS = ?";
         try
                 (
-                        Connection conn = this.conectarse();
                         PreparedStatement pstmt = conn.prepareStatement(sql);
                         )
         {
             pstmt.setBoolean(1,favorito);
             pstmt.setInt(2,id_proyecto);
+            pstmt.executeUpdate();
+            closeLink();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
     public void updateTareas(boolean hecho, Prioridad p, int id_tarea){
+        conectarse();
         String sql = "UPDATE TAREAS SET hecho = ?, prioridad = ? WHERE id_tareas = ?";
         try(
-                Connection conn = this.conectarse();
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 )
         {
             pstmt.setBoolean(1,hecho);
             pstmt.setString(2,p.toString());
             pstmt.setInt(3,id_tarea);
+            pstmt.executeUpdate();
+            closeLink();
         }catch (SQLException e){
             e.printStackTrace();
         }
     }
 
     public void updateSubtareas(boolean hecho, Prioridad p, int id_subtarea){
+        conectarse();
         String sql = "UPDATE SUBTAREAS SET hecho = ?, prioridad = ? WHERE id_subtareas = ?";
         try(
-                Connection conn = this.conectarse();
                 PreparedStatement pstmt = conn.prepareStatement(sql);
         )
         {
             pstmt.setBoolean(1,hecho);
             pstmt.setString(2,p.toString());
             pstmt.setInt(3,id_subtarea);
+            pstmt.executeUpdate();
+            closeLink();
         }catch (SQLException e){
             e.printStackTrace();
         }

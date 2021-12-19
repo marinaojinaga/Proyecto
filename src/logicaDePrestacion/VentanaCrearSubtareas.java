@@ -1,9 +1,7 @@
 package logicaDePrestacion;
 
 import gestionBD.GestorBD;
-import logicaDeDatos.Prioridad;
-import logicaDeDatos.Subtarea;
-import logicaDeDatos.Tarea;
+import logicaDeDatos.*;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -26,7 +24,7 @@ public class VentanaCrearSubtareas extends JFrame {
     /**
      * Create the frame.
      */
-    public VentanaCrearSubtareas(Tarea t) {
+    public VentanaCrearSubtareas(Tarea t, Proyecto proyecto, Usuario usuario) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
@@ -68,7 +66,7 @@ public class VentanaCrearSubtareas extends JFrame {
                 GestorBD gestorBD = new GestorBD();
                 Subtarea subtarea = new Subtarea(nombre.getText(),chckbxNewCheckBox.isSelected(),(Prioridad) prioridadSubtarea.getSelectedItem(),0,t.getId_tarea());
                 gestorBD.insertSubtareas(subtarea);
-                VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(t);
+                VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(t,proyecto,usuario);
                 ventanaVisionTarea.setVisible(true);
                 VentanaCrearSubtareas.this.setVisible(false);
             }

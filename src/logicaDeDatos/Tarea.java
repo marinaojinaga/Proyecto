@@ -9,7 +9,7 @@ import java.util.Calendar;
  * @version 1.0
  * @since 1.0
  */
-public class Tarea extends TareaGeneral implements iEnumAString{
+public class Tarea extends TareaGeneral implements iEnumAString, IComparable<Tarea>{
 	
 	/**Descripcion de la tarea 0
 	 */
@@ -77,5 +77,53 @@ public class Tarea extends TareaGeneral implements iEnumAString{
 	@Override
 	public String toString(){
 		return getNombre();
+	}
+
+	@Override
+	public int compararAlfabetico(Tarea objeto) {
+		int resultado=0;
+		int compare = objeto.getNombre().compareTo(this.getNombre());
+		if(compare<0)
+			resultado = 1;
+		else if(compare>0)
+			resultado = -1;
+		return resultado;
+	}
+
+	/**
+	 * Ordena con los true abajo y los false arriba
+	 */
+	@Override
+	public int compararBool(Tarea objeto) {
+		int resultado = 0;
+		if (this.isHecho()&&!objeto.isHecho())
+			resultado = -1;
+		if(!this.isHecho()&&objeto.isHecho())
+			resultado = 1;
+		return resultado;
+	}
+
+	@Override
+	public int compararPrioridad(Tarea objeto) {
+		int resultado = 0;
+		int prioridadObjeto = dePrioridadAInt(objeto.getPrioridad());
+		int prioridadThis = dePrioridadAInt(this.getPrioridad());
+		if(prioridadObjeto<prioridadThis)
+			resultado = 1;
+		else if(prioridadObjeto>prioridadThis){
+			resultado = -1;
+		}
+		return resultado;
+	}
+
+	public int dePrioridadAInt(Prioridad p){
+		int prioridad = 1;
+		if(p.equals(Prioridad.Alta))
+			prioridad=3;
+		else if(p.equals(Prioridad.Media))
+			prioridad = 2;
+		else if(p.equals(Prioridad.Baja))
+			prioridad = 1;
+		return prioridad;
 	}
 }

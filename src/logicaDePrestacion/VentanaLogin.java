@@ -89,6 +89,17 @@ public class VentanaLogin extends JFrame{
         contrasena.setBounds(79, 92, 325, 20);
         contentPane.add(contrasena);
         contrasena.setColumns(10);
+
+        JButton crearUsuario = new JButton("Crear Usuario");
+        crearUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                VentanaCrearUsuario ventanaCrearUsuario = new VentanaCrearUsuario();
+                ventanaCrearUsuario.setVisible(true);
+                VentanaLogin.this.setVisible(false);
+            }
+        });
+        crearUsuario.setBounds(147, 161, 122, 23);
+        contentPane.add(crearUsuario);
     }
 
     /**

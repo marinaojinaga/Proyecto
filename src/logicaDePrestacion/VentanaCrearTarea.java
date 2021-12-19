@@ -5,6 +5,7 @@ import gestionBD.GestorBD;
 import logicaDeDatos.Prioridad;
 import logicaDeDatos.Proyecto;
 import logicaDeDatos.Tarea;
+import logicaDeDatos.Usuario;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -26,7 +27,7 @@ public class VentanaCrearTarea extends JFrame {
         /**
          * Create the frame.
          */
-        public VentanaCrearTarea(Proyecto proyecto) {
+        public VentanaCrearTarea(Proyecto proyecto, Usuario usuario) {
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setBounds(100, 100, 450, 300);
             contentPane = new JPanel();
@@ -79,7 +80,7 @@ public class VentanaCrearTarea extends JFrame {
                     GestorBD g = new GestorBD();
                     g.insertTarea(t);
                     try {
-                        VentanaUnProyecto ventanaUnProyecto = new VentanaUnProyecto(proyecto);
+                        VentanaUnProyecto ventanaUnProyecto = new VentanaUnProyecto(proyecto,usuario);
                         ventanaUnProyecto.setVisible(true);
                         VentanaCrearTarea.this.setVisible(false);
                     } catch (SQLException ex) {

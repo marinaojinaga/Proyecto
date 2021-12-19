@@ -1,8 +1,8 @@
 package logicaDePrestacion;
 
 import gestionBD.GestorBD;
-import logicaDeDatos.Subtarea;
-import logicaDeDatos.Tarea;
+import logicaDeDatos.*;
+import logicaNegocio.CalculadorHechoGenerico;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class VentanaVisionTarea extends JFrame {
@@ -23,7 +24,7 @@ public class VentanaVisionTarea extends JFrame {
     /**
      * Create the frame.
      */
-    public VentanaVisionTarea(Tarea tarea) {
+    public VentanaVisionTarea(Tarea tarea, Proyecto proyecto, Usuario usuario) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
@@ -41,30 +42,46 @@ public class VentanaVisionTarea extends JFrame {
 
         JCheckBox hecho = new JCheckBox("Hecho");
         hecho.setSelected(tarea.isHecho());
-        hecho.setBounds(253, 18, 97, 23);
+        hecho.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tarea.setHecho(hecho.isSelected());
+                GestorBD g = new GestorBD();
+                g.updateTareas(hecho.isSelected(), tarea.getPrioridad(),tarea.getId_tarea());
+            }
+        });
+        hecho.setBounds(253, 18, 75, 23);
         contentPane.add(hecho);
 
         JLabel lblNewLabel = new JLabel("Prioridad");
         lblNewLabel.setBounds(10, 75, 78, 14);
         contentPane.add(lblNewLabel);
 
-        Prioridad = new JTextField();
-        Prioridad.setText(tarea.getPrioridad().toString());
-        Prioridad.setEditable(false);
+
+        JComboBox Prioridad = new JComboBox<logicaDeDatos.Prioridad>();
+        Prioridad[] p = new Prioridad[]{logicaDeDatos.Prioridad.Alta,logicaDeDatos.Prioridad.Media, logicaDeDatos.Prioridad.Baja};
+        Prioridad.setModel(new DefaultComboBoxModel(p));
+        Prioridad.setSelectedItem(tarea.getPrioridad());
+        Prioridad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tarea.setPrioridad((logicaDeDatos.Prioridad) Prioridad.getSelectedItem());
+                GestorBD gestorBD = new GestorBD();
+                gestorBD.updateTareas(tarea.isHecho(), (logicaDeDatos.Prioridad) Prioridad.getSelectedItem(),tarea.getId_tarea());
+            }
+        });
         Prioridad.setBounds(97, 72, 120, 20);
         contentPane.add(Prioridad);
-        Prioridad.setColumns(10);
 
         JLabel lblNewLabel_1 = new JLabel("Descripci\u00F3n");
         lblNewLabel_1.setBounds(10, 125, 78, 14);
         contentPane.add(lblNewLabel_1);
 
-        descripcion = new JTextField();
+        JTextPane descripcion = new JTextPane();
         descripcion.setText(tarea.getDescripcion());
         descripcion.setEditable(false);
-        descripcion.setBounds(97, 122, 120, 133);
+        descripcion.setBounds(81, 125, 149, 72);
         contentPane.add(descripcion);
-        descripcion.setColumns(10);
 
         JLabel lblNewLabel_2 = new JLabel("Subtareas");
         lblNewLabel_2.setBounds(310, 59, 90, 14);
@@ -73,9 +90,11 @@ public class VentanaVisionTarea extends JFrame {
         GestorBD gestorBD = new GestorBD();
         DefaultListModel<Subtarea> subtareas = new DefaultListModel<Subtarea>();
         ArrayList<Subtarea> sub = gestorBD.selectSubtareas();
+        ArrayList<Subtarea> subtareasPorcentaje = new ArrayList<Subtarea>();
         for(int i=0;i<sub.size();i++){
             if(sub.get(i).getId_tarea()==tarea.getId_tarea()){
                 subtareas.addElement(sub.get(i));
+                subtareasPorcentaje.add(sub.get(i));
             }
         }
         JScrollPane scrollPane = new JScrollPane();
@@ -87,7 +106,7 @@ public class VentanaVisionTarea extends JFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 Subtarea subtarea = (Subtarea)list.getSelectedValue();
-                VentanaVisionSubtarea ventanaVisionSubtarea = new VentanaVisionSubtarea(subtarea);
+                VentanaVisionSubtarea ventanaVisionSubtarea = new VentanaVisionSubtarea(subtarea,tarea,proyecto,usuario);
                 ventanaVisionSubtarea.setVisible(true);
                 VentanaVisionTarea.this.setVisible(false);
             }
@@ -98,7 +117,7 @@ public class VentanaVisionTarea extends JFrame {
         JButton nuevaSubtarea = new JButton("Nueva subtarea");
         nuevaSubtarea.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                VentanaCrearSubtareas ventanaCrearSubtareas = new VentanaCrearSubtareas(tarea);
+                VentanaCrearSubtareas ventanaCrearSubtareas = new VentanaCrearSubtareas(tarea,proyecto,usuario);
                 ventanaCrearSubtareas.setVisible(true);
                 VentanaVisionTarea.this.setVisible(false);
             }
@@ -106,5 +125,33 @@ public class VentanaVisionTarea extends JFrame {
         nuevaSubtarea.setBounds(290, 232, 138, 23);
         contentPane.add(nuevaSubtarea);
 
+        JLabel lblNewLabel_3 = new JLabel("Subtareas completadas");
+        lblNewLabel_3.setBounds(10, 236, 140, 14);
+        contentPane.add(lblNewLabel_3);
+
+        JTextField porcentaje = new JTextField();
+        CalculadorHechoGenerico<Subtarea> CalculadorHechoGenerico = new CalculadorHechoGenerico<Subtarea>();
+        String s = CalculadorHechoGenerico.calcular(subtareasPorcentaje);
+        porcentaje.setText(s);
+        porcentaje.setEditable(false);
+        porcentaje.setBounds(150, 233, 96, 20);
+        contentPane.add(porcentaje);
+        porcentaje.setColumns(10);
+
+        JButton atras = new JButton("Atras");
+        atras.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    VentanaUnProyecto ventanaUnProyecto = new VentanaUnProyecto(proyecto,usuario);
+                    ventanaUnProyecto.setVisible(true);
+                    VentanaVisionTarea.this.setVisible(false);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        });
+        atras.setBounds(339, 11, 89, 23);
+        contentPane.add(atras);
     }
 }

@@ -3,6 +3,8 @@ package logicaDePrestacion;
 import gestionBD.GestorBD;
 import logicaDeDatos.Proyecto;
 import logicaDeDatos.Tarea;
+import logicaDeDatos.Usuario;
+import logicaNegocio.CalculadorHechoGenerico;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -25,7 +27,7 @@ public class VentanaUnProyecto extends JFrame {
     /**
      * Create the frame.
      */
-    public VentanaUnProyecto(Proyecto proyectoP) throws SQLException {
+    public VentanaUnProyecto(Proyecto proyectoP, Usuario usuario) throws SQLException {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
@@ -50,17 +52,33 @@ public class VentanaUnProyecto extends JFrame {
                 g.updateProyecto(favorito.isSelected(),proyectoP.getId_proyecto());
             }
         });
-        favorito.setBounds(270, 16, 97, 23);
+        favorito.setBounds(270, 50, 97, 23);
         contentPane.add(favorito);
 
         GestorBD gestorBD = new GestorBD();
         DefaultListModel<Tarea> tareasUx = new DefaultListModel<Tarea>();
         ArrayList<Tarea> tareas = gestorBD.selectTareas();
+        ArrayList<Tarea> tareasPorcentaje = new ArrayList<Tarea>();
         for(int i=0; i<tareas.size();i++){
             if(tareas.get(i).getId_proyecto() == proyectoP.getId_proyecto()){
                 tareasUx.addElement(tareas.get(i));
+                tareasPorcentaje.add(tareas.get(i));
             }
         }
+
+        JLabel lblNewLabel = new JLabel("Tareas completadas");
+        lblNewLabel.setBounds(307, 127, 121, 14);
+        contentPane.add(lblNewLabel);
+
+        JTextField porcentaje = new JTextField();
+        porcentaje.setEditable(false);
+        CalculadorHechoGenerico<Tarea> calculadorHechoGenerico = new CalculadorHechoGenerico<Tarea>();
+        String por =calculadorHechoGenerico.calcular(tareasPorcentaje);
+        porcentaje.setText(por);
+        porcentaje.setBounds(307, 152, 121, 20);
+        contentPane.add(porcentaje);
+        porcentaje.setColumns(10);
+
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBounds(10, 79, 219, 148);
         contentPane.add(scrollPane);
@@ -70,7 +88,7 @@ public class VentanaUnProyecto extends JFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 Tarea t = (Tarea)list.getSelectedValue();
-                VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(t);
+                VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(t,proyectoP,usuario);
                 ventanaVisionTarea.setVisible(true);
                 VentanaUnProyecto.this.setVisible(false);
             }
@@ -83,13 +101,24 @@ public class VentanaUnProyecto extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 GestorBD g = new GestorBD();
                 g.updateProyecto(favorito.isSelected(),proyectoP.getId_proyecto());
-                VentanaCrearTarea ventanaCrearTarea = new VentanaCrearTarea(proyectoP);
+                VentanaCrearTarea ventanaCrearTarea = new VentanaCrearTarea(proyectoP,usuario);
                 ventanaCrearTarea.setVisible(true);
                 VentanaUnProyecto.this.setVisible(false);
             }
         });
         nuevaTarea.setBounds(274, 204, 154, 23);
         contentPane.add(nuevaTarea);
+
+        JButton atras = new JButton("Atras");
+        atras.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                VentanaProyectos ventanaProyectos = new VentanaProyectos(usuario);
+                ventanaProyectos.setVisible(true);
+                VentanaUnProyecto.this.setVisible(false);
+            }
+        });
+        atras.setBounds(339, 11, 89, 23);
+        contentPane.add(atras);
 
     }
 }

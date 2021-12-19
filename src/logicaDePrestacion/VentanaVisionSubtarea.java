@@ -1,17 +1,16 @@
 package logicaDePrestacion;
 
-import logicaDeDatos.Subtarea;
+import gestionBD.GestorBD;
+import logicaDeDatos.*;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
 import java.awt.Font;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class VentanaVisionSubtarea extends JFrame {
 
@@ -22,7 +21,7 @@ public class VentanaVisionSubtarea extends JFrame {
     /**
      * Create the frame.
      */
-    public VentanaVisionSubtarea(Subtarea subtarea) {
+    public VentanaVisionSubtarea(Subtarea subtarea, Tarea tarea, Proyecto proyecto, Usuario usuario) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();
@@ -40,18 +39,46 @@ public class VentanaVisionSubtarea extends JFrame {
 
         JCheckBox hecho = new JCheckBox("Hecho");
         hecho.setSelected(subtarea.isHecho());
+        hecho.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                subtarea.setHecho(hecho.isSelected());
+                GestorBD g = new GestorBD();
+                g.updateSubtareas(hecho.isSelected(), subtarea.getPrioridad(),subtarea.getId_subtarea());
+            }
+        });
         hecho.setBounds(10, 92, 97, 23);
         contentPane.add(hecho);
 
-        prioridad = new JTextField();
-        prioridad.setText(subtarea.getPrioridad().toString());
-        prioridad.setEditable(false);
-        prioridad.setBounds(78, 158, 117, 20);
-        contentPane.add(prioridad);
-        prioridad.setColumns(10);
+
+        JComboBox Prioridad = new JComboBox<logicaDeDatos.Prioridad>();
+        logicaDeDatos.Prioridad[] p = new Prioridad[]{logicaDeDatos.Prioridad.Alta,logicaDeDatos.Prioridad.Media, logicaDeDatos.Prioridad.Baja};
+        Prioridad.setModel(new DefaultComboBoxModel(p));
+        Prioridad.setSelectedItem(subtarea.getPrioridad());
+        Prioridad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                subtarea.setPrioridad((logicaDeDatos.Prioridad) Prioridad.getSelectedItem());
+                GestorBD gestorBD = new GestorBD();
+                gestorBD.updateSubtareas(subtarea.isHecho(), (logicaDeDatos.Prioridad) Prioridad.getSelectedItem(),subtarea.getId_subtarea());
+            }
+        });
+        Prioridad.setBounds(78, 158, 117, 20);
+        contentPane.add(Prioridad);
 
         JLabel lblNewLabel = new JLabel("Prioridad");
         lblNewLabel.setBounds(10, 161, 79, 14);
         contentPane.add(lblNewLabel);
+
+        JButton atras = new JButton("Atras");
+        atras.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(tarea,proyecto,usuario);
+                ventanaVisionTarea.setVisible(true);
+                VentanaVisionSubtarea.this.setVisible(false);
+            }
+        });
+        atras.setBounds(339, 11, 89, 23);
+        contentPane.add(atras);
     }
 }

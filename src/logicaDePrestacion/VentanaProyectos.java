@@ -68,13 +68,12 @@ public class VentanaProyectos extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				Proyecto p = (Proyecto)list.getSelectedValue();
 				try {
-					VentanaUnProyecto v1Proyecto = new VentanaUnProyecto(p);
+					VentanaUnProyecto v1Proyecto = new VentanaUnProyecto(p,usuariox);
 					v1Proyecto.setVisible(true);
 					VentanaProyectos.this.setVisible(false);
 				} catch (SQLException ex) {
 					ex.printStackTrace();
 				}
-
 			}
 		});
 		scrollPane.setViewportView(list);
