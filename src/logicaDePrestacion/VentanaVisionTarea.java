@@ -42,13 +42,10 @@ public class VentanaVisionTarea extends JFrame {
 
         JCheckBox hecho = new JCheckBox("Hecho");
         hecho.setSelected(tarea.isHecho());
-        hecho.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tarea.setHecho(hecho.isSelected());
-                GestorBD g = new GestorBD();
-                g.updateTareas(hecho.isSelected(), tarea.getPrioridad(),tarea.getId_tarea());
-            }
+        hecho.addActionListener(e-> {
+            tarea.setHecho(hecho.isSelected());
+            GestorBD g = new GestorBD();
+            g.updateTareas(hecho.isSelected(), tarea.getPrioridad(),tarea.getId_tarea());
         });
         hecho.setBounds(253, 18, 75, 23);
         contentPane.add(hecho);
@@ -62,13 +59,10 @@ public class VentanaVisionTarea extends JFrame {
         Prioridad[] p = new Prioridad[]{logicaDeDatos.Prioridad.Alta,logicaDeDatos.Prioridad.Media, logicaDeDatos.Prioridad.Baja};
         Prioridad.setModel(new DefaultComboBoxModel(p));
         Prioridad.setSelectedItem(tarea.getPrioridad());
-        Prioridad.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tarea.setPrioridad((logicaDeDatos.Prioridad) Prioridad.getSelectedItem());
-                GestorBD gestorBD = new GestorBD();
-                gestorBD.updateTareas(tarea.isHecho(), (logicaDeDatos.Prioridad) Prioridad.getSelectedItem(),tarea.getId_tarea());
-            }
+        Prioridad.addActionListener(e->{
+            tarea.setPrioridad((logicaDeDatos.Prioridad) Prioridad.getSelectedItem());
+            GestorBD gestorBD = new GestorBD();
+            gestorBD.updateTareas(tarea.isHecho(), (logicaDeDatos.Prioridad) Prioridad.getSelectedItem(),tarea.getId_tarea());
         });
         Prioridad.setBounds(97, 72, 120, 20);
         contentPane.add(Prioridad);
@@ -91,25 +85,22 @@ public class VentanaVisionTarea extends JFrame {
         DefaultListModel<Subtarea> subtareas = new DefaultListModel<Subtarea>();
         ArrayList<Subtarea> sub = gestorBD.selectSubtareas();
         ArrayList<Subtarea> subtareasPorcentaje = new ArrayList<Subtarea>();
-        for(int i=0;i<sub.size();i++){
-            if(sub.get(i).getId_tarea()==tarea.getId_tarea()){
-                subtareas.addElement(sub.get(i));
-                subtareasPorcentaje.add(sub.get(i));
+        sub.forEach(e->{
+            if(e.getId_tarea()==tarea.getId_tarea()){
+                subtareas.addElement(e);
+                subtareasPorcentaje.add(e);
             }
-        }
+        });
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBounds(253, 75, 175, 122);
         contentPane.add(scrollPane);
 
         JList list = new JList();
-        list.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                Subtarea subtarea = (Subtarea)list.getSelectedValue();
-                VentanaVisionSubtarea ventanaVisionSubtarea = new VentanaVisionSubtarea(subtarea,tarea,proyecto,usuario);
-                ventanaVisionSubtarea.setVisible(true);
-                VentanaVisionTarea.this.setVisible(false);
-            }
+        list.addListSelectionListener(e->{
+            Subtarea subtarea = (Subtarea)list.getSelectedValue();
+            VentanaVisionSubtarea ventanaVisionSubtarea = new VentanaVisionSubtarea(subtarea,tarea,proyecto,usuario);
+            ventanaVisionSubtarea.setVisible(true);
+            VentanaVisionTarea.this.setVisible(false);
         });
         scrollPane.setViewportView(list);
         list.setModel(subtareas);
@@ -119,35 +110,28 @@ public class VentanaVisionTarea extends JFrame {
         ordenar.addItem("Orden alfabético");
         ordenar.addItem("Tareas no hechas arriba");
         ordenar.addItem("Ordenar por prioridad");
-        ordenar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                QuickSort quickSort = new QuickSort();
-                DefaultListModel<Subtarea> subtareaOrdenada = new DefaultListModel<>();
-                if(ordenar.getSelectedItem().equals("Orden alfabético")){
-                    quickSort.SortAlfabetico(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
-                }else if (ordenar.getSelectedItem().equals("Tareas no hechas arriba")){
-                    quickSort.SortBooleanos(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
-                }else if(ordenar.getSelectedItem().equals("Ordenar por prioridad")){
-                    quickSort.SortPrioridad(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
-                }
-                for(int i=0;i<subtareasPorcentaje.size();i++){
-                    subtareaOrdenada.addElement(subtareasPorcentaje.get(i));
-                }
-                list.setModel(subtareaOrdenada);
+        ordenar.addActionListener(e-> {
+            QuickSort quickSort = new QuickSort();
+            DefaultListModel<Subtarea> subtareaOrdenada = new DefaultListModel<>();
+            if(ordenar.getSelectedItem().equals("Orden alfabético")){
+                quickSort.SortAlfabetico(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
+            }else if (ordenar.getSelectedItem().equals("Tareas no hechas arriba")){
+                quickSort.SortBooleanos(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
+            }else if(ordenar.getSelectedItem().equals("Ordenar por prioridad")){
+                quickSort.SortPrioridad(subtareasPorcentaje,0,subtareasPorcentaje.size()-1);
             }
+            subtareasPorcentaje.forEach(f-> subtareaOrdenada.addElement(f));
+            list.setModel(subtareaOrdenada);
         });
         ordenar.setBounds(253, 197, 175, 22);
         getContentPane().add(ordenar);
 
 
         JButton nuevaSubtarea = new JButton("Nueva subtarea");
-        nuevaSubtarea.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                VentanaCrearSubtareas ventanaCrearSubtareas = new VentanaCrearSubtareas(tarea,proyecto,usuario);
-                ventanaCrearSubtareas.setVisible(true);
-                VentanaVisionTarea.this.setVisible(false);
-            }
+        nuevaSubtarea.addActionListener(e->{
+            VentanaCrearSubtareas ventanaCrearSubtareas = new VentanaCrearSubtareas(tarea,proyecto,usuario);
+            ventanaCrearSubtareas.setVisible(true);
+            VentanaVisionTarea.this.setVisible(false);
         });
         nuevaSubtarea.setBounds(290, 232, 138, 23);
         contentPane.add(nuevaSubtarea);
@@ -166,16 +150,13 @@ public class VentanaVisionTarea extends JFrame {
         porcentaje.setColumns(10);
 
         JButton atras = new JButton("Atras");
-        atras.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    VentanaUnProyecto ventanaUnProyecto = new VentanaUnProyecto(proyecto,usuario);
-                    ventanaUnProyecto.setVisible(true);
-                    VentanaVisionTarea.this.setVisible(false);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-
+        atras.addActionListener(e-> {
+            try {
+                VentanaUnProyecto ventanaUnProyecto = new VentanaUnProyecto(proyecto,usuario);
+                ventanaUnProyecto.setVisible(true);
+                VentanaVisionTarea.this.setVisible(false);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         });
         atras.setBounds(339, 11, 89, 23);

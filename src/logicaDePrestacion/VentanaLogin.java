@@ -62,28 +62,26 @@ public class VentanaLogin extends JFrame{
 
         GestorBD gestorBD = new GestorBD();
         JButton Acceder = new JButton("Acceder");
-       Acceder.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    if(coincide(email.getText(),contrasena.getText())){
-                        VentanaProyectos vProyectos = new VentanaProyectos(gestorBD.getusuario(email.getText()));
-                        vProyectos.setVisible(true);
-                        VentanaLogin.this.setVisible(false);
-                    }else{
-                        JOptionPane.showMessageDialog(VentanaLogin.this, "Contraseña y/o mail invalidos");
-                    }
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
+       Acceder.addActionListener(e-> {
+           try {
+               if(coincide(email.getText(),contrasena.getText())){
+                   VentanaProyectos vProyectos = new VentanaProyectos(gestorBD.getusuario(email.getText()));
+                   vProyectos.setVisible(true);
+                   VentanaLogin.this.setVisible(false);
+               }else{
+                   JOptionPane.showMessageDialog(VentanaLogin.this, "Contraseña y/o mail invalidos");
+               }
+           } catch (SQLException ex) {
+               ex.printStackTrace();
+           }
         });
-        Acceder.setBounds(147, 198, 122, 23);
-        contentPane.add(Acceder);
+       Acceder.setBounds(147, 198, 122, 23);
+       contentPane.add(Acceder);
 
-        email = new JTextField();
-        email.setBounds(79, 51, 325, 20);
-        contentPane.add(email);
-        email.setColumns(10);
+       email = new JTextField();
+       email.setBounds(79, 51, 325, 20);
+       contentPane.add(email);
+       email.setColumns(10);
 
         contrasena = new JTextField();
         contrasena.setBounds(79, 92, 325, 20);
@@ -91,12 +89,10 @@ public class VentanaLogin extends JFrame{
         contrasena.setColumns(10);
 
         JButton crearUsuario = new JButton("Crear Usuario");
-        crearUsuario.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                VentanaCrearUsuario ventanaCrearUsuario = new VentanaCrearUsuario();
-                ventanaCrearUsuario.setVisible(true);
-                VentanaLogin.this.setVisible(false);
-            }
+        crearUsuario.addActionListener(e-> {
+            VentanaCrearUsuario ventanaCrearUsuario = new VentanaCrearUsuario();
+            ventanaCrearUsuario.setVisible(true);
+            VentanaLogin.this.setVisible(false);
         });
         crearUsuario.setBounds(147, 161, 122, 23);
         contentPane.add(crearUsuario);

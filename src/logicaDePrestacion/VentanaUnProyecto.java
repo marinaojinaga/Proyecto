@@ -60,12 +60,12 @@ public class VentanaUnProyecto extends JFrame {
         DefaultListModel<Tarea> tareasUx = new DefaultListModel<Tarea>();
         ArrayList<Tarea> tareas = gestorBD.selectTareas();
         ArrayList<Tarea> tareasPorcentaje = new ArrayList<Tarea>();
-        for(int i=0; i<tareas.size();i++){
-            if(tareas.get(i).getId_proyecto() == proyectoP.getId_proyecto()){
-                tareasUx.addElement(tareas.get(i));
-                tareasPorcentaje.add(tareas.get(i));
+        tareas.forEach(e->{
+            if(e.getId_proyecto() == proyectoP.getId_proyecto()){
+                tareasUx.addElement(e);
+                tareasPorcentaje.add(e);
             }
-        }
+        });
 
         JLabel lblNewLabel = new JLabel("Tareas completadas");
         lblNewLabel.setBounds(307, 127, 121, 14);
@@ -85,38 +85,31 @@ public class VentanaUnProyecto extends JFrame {
         contentPane.add(scrollPane);
 
         JList list = new JList();
-        list.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                Tarea t = (Tarea)list.getSelectedValue();
-                VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(t,proyectoP,usuario);
-                VentanaUnProyecto.this.setVisible(false);
-                ventanaVisionTarea.setVisible(true);
-            }
+        list.addListSelectionListener(e-> {
+            Tarea t = (Tarea)list.getSelectedValue();
+            VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(t,proyectoP,usuario);
+            VentanaUnProyecto.this.setVisible(false);
+            ventanaVisionTarea.setVisible(true);
         });
         scrollPane.setViewportView(list);
         list.setModel(tareasUx);
 
         JButton nuevaTarea = new JButton("Nueva tarea");
-        nuevaTarea.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                GestorBD g = new GestorBD();
-                g.updateProyecto(favorito.isSelected(),proyectoP.getId_proyecto());
-                VentanaCrearTarea ventanaCrearTarea = new VentanaCrearTarea(proyectoP,usuario);
-                ventanaCrearTarea.setVisible(true);
-                VentanaUnProyecto.this.setVisible(false);
-            }
+        nuevaTarea.addActionListener(e->{
+            GestorBD g = new GestorBD();
+            g.updateProyecto(favorito.isSelected(),proyectoP.getId_proyecto());
+            VentanaCrearTarea ventanaCrearTarea = new VentanaCrearTarea(proyectoP,usuario);
+            ventanaCrearTarea.setVisible(true);
+            VentanaUnProyecto.this.setVisible(false);
         });
         nuevaTarea.setBounds(274, 204, 154, 23);
         contentPane.add(nuevaTarea);
 
         JButton atras = new JButton("Atras");
-        atras.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                VentanaProyectos ventanaProyectos = new VentanaProyectos(usuario);
-                ventanaProyectos.setVisible(true);
-                VentanaUnProyecto.this.setVisible(false);
-            }
+        atras.addActionListener(e-> {
+            VentanaProyectos ventanaProyectos = new VentanaProyectos(usuario);
+            ventanaProyectos.setVisible(true);
+            VentanaUnProyecto.this.setVisible(false);
         });
         atras.setBounds(339, 11, 89, 23);
         contentPane.add(atras);
@@ -126,23 +119,18 @@ public class VentanaUnProyecto extends JFrame {
         ordenar.addItem("Orden alfabético");
         ordenar.addItem("Tareas no hechas arriba");
         ordenar.addItem("Ordenar por prioridad");
-        ordenar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                QuickSort quickSort = new QuickSort();
-                DefaultListModel<Tarea> tareaOrdenada = new DefaultListModel<Tarea>();
-                if(ordenar.getSelectedItem().equals("Orden alfabético")){
-                    quickSort.SortAlfabetico(tareasPorcentaje,0,tareasPorcentaje.size()-1);
-                }else if (ordenar.getSelectedItem().equals("Tareas no hechas arriba")){
-                    quickSort.SortBooleanos(tareasPorcentaje,0,tareasPorcentaje.size()-1);
-                }else if(ordenar.getSelectedItem().equals("Ordenar por prioridad")){
-                    quickSort.SortPrioridad(tareasPorcentaje,0,tareasPorcentaje.size()-1);
-                }
-                for(int i=0;i<tareasPorcentaje.size();i++){
-                    tareaOrdenada.addElement(tareasPorcentaje.get(i));
-                }
-                list.setModel(tareaOrdenada);
+        ordenar.addActionListener(e-> {
+            QuickSort quickSort = new QuickSort();
+            DefaultListModel<Tarea> tareaOrdenada = new DefaultListModel<Tarea>();
+            if(ordenar.getSelectedItem().equals("Orden alfabético")){
+                quickSort.SortAlfabetico(tareasPorcentaje,0,tareasPorcentaje.size()-1);
+            }else if (ordenar.getSelectedItem().equals("Tareas no hechas arriba")){
+                quickSort.SortBooleanos(tareasPorcentaje,0,tareasPorcentaje.size()-1);
+            }else if(ordenar.getSelectedItem().equals("Ordenar por prioridad")){
+                quickSort.SortPrioridad(tareasPorcentaje,0,tareasPorcentaje.size()-1);
             }
+            tareasPorcentaje.forEach(f->tareaOrdenada.addElement(f));
+            list.setModel(tareaOrdenada);
         });
         ordenar.setBounds(10, 57, 219, 22);
         getContentPane().add(ordenar);

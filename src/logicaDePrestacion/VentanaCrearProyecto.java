@@ -50,15 +50,13 @@ public class VentanaCrearProyecto extends JFrame {
         contentPane.add(favorito);
 
         JButton Aceptar = new JButton("Aceptar");
-        Aceptar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        Aceptar.addActionListener(e -> {
                 Proyecto proyecto = new Proyecto(nombre.getText(),favorito.isSelected(),0,usuario.getId_usuario());
                 GestorBD g = new GestorBD();
                 g.insertProyecto(proyecto);
                 VentanaProyectos ventanaProyectos = new VentanaProyectos(usuario);
                 ventanaProyectos.setVisible(true);
                 VentanaCrearProyecto.this.setVisible(false);
-            }
         });
         Aceptar.setBounds(176, 218, 89, 23);
         contentPane.add(Aceptar);

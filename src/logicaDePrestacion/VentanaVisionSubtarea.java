@@ -39,13 +39,10 @@ public class VentanaVisionSubtarea extends JFrame {
 
         JCheckBox hecho = new JCheckBox("Hecho");
         hecho.setSelected(subtarea.isHecho());
-        hecho.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                subtarea.setHecho(hecho.isSelected());
-                GestorBD g = new GestorBD();
-                g.updateSubtareas(hecho.isSelected(), subtarea.getPrioridad(),subtarea.getId_subtarea());
-            }
+        hecho.addActionListener(e-> {
+            subtarea.setHecho(hecho.isSelected());
+            GestorBD g = new GestorBD();
+            g.updateSubtareas(hecho.isSelected(), subtarea.getPrioridad(),subtarea.getId_subtarea());
         });
         hecho.setBounds(10, 92, 97, 23);
         contentPane.add(hecho);
@@ -55,13 +52,10 @@ public class VentanaVisionSubtarea extends JFrame {
         logicaDeDatos.Prioridad[] p = new Prioridad[]{logicaDeDatos.Prioridad.Alta,logicaDeDatos.Prioridad.Media, logicaDeDatos.Prioridad.Baja};
         Prioridad.setModel(new DefaultComboBoxModel(p));
         Prioridad.setSelectedItem(subtarea.getPrioridad());
-        Prioridad.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                subtarea.setPrioridad((logicaDeDatos.Prioridad) Prioridad.getSelectedItem());
-                GestorBD gestorBD = new GestorBD();
-                gestorBD.updateSubtareas(subtarea.isHecho(), (logicaDeDatos.Prioridad) Prioridad.getSelectedItem(),subtarea.getId_subtarea());
-            }
+        Prioridad.addActionListener(e-> {
+            subtarea.setPrioridad((logicaDeDatos.Prioridad) Prioridad.getSelectedItem());
+            GestorBD gestorBD = new GestorBD();
+            gestorBD.updateSubtareas(subtarea.isHecho(), (logicaDeDatos.Prioridad) Prioridad.getSelectedItem(),subtarea.getId_subtarea());
         });
         Prioridad.setBounds(78, 158, 117, 20);
         contentPane.add(Prioridad);
@@ -71,12 +65,10 @@ public class VentanaVisionSubtarea extends JFrame {
         contentPane.add(lblNewLabel);
 
         JButton atras = new JButton("Atras");
-        atras.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(tarea,proyecto,usuario);
-                ventanaVisionTarea.setVisible(true);
-                VentanaVisionSubtarea.this.setVisible(false);
-            }
+        atras.addActionListener(e-> {
+            VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(tarea,proyecto,usuario);
+            ventanaVisionTarea.setVisible(true);
+            VentanaVisionSubtarea.this.setVisible(false);
         });
         atras.setBounds(339, 11, 89, 23);
         contentPane.add(atras);

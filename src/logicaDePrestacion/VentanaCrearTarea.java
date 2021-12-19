@@ -74,8 +74,7 @@ public class VentanaCrearTarea extends JFrame {
 
 
             JButton Aceptar = new JButton("Aceptar");
-            Aceptar.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+            Aceptar.addActionListener(e-> {
                     Tarea t = new Tarea(nombre.getText(),hecho.isSelected(), (logicaDeDatos.Prioridad) Prioridad.getSelectedItem(),descripcion.getText(),0,proyecto.getId_proyecto());
                     GestorBD g = new GestorBD();
                     g.insertTarea(t);
@@ -87,7 +86,6 @@ public class VentanaCrearTarea extends JFrame {
                         ex.printStackTrace();
                     }
 
-                }
             });
             Aceptar.setBounds(151, 232, 89, 23);
             contentPane.add(Aceptar);

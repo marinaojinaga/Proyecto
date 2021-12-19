@@ -46,10 +46,12 @@ public class QuickSort <t extends IComparableTareaGeneral<t>> implements IOrdena
 
     @Override
     public void SortAlfabetico(ArrayList<t> ArrayList, int low, int high) {
-        if(low<high){
-            int pivot_location=partitionAlfabetico(ArrayList,low,high);
-            SortAlfabetico(ArrayList,low,pivot_location-1);
-            SortAlfabetico(ArrayList,pivot_location+1,high);
+        if(ArrayList.size()>1){
+            if(low<high){
+                int pivot_location=partitionAlfabetico(ArrayList,low,high);
+                SortAlfabetico(ArrayList,low,pivot_location-1);
+                SortAlfabetico(ArrayList,pivot_location+1,high);
+            }
         }
     }
 

@@ -9,12 +9,7 @@ import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-/*Cuando cierro o VentanaCrearSubtareas o VentanaCrearTarea sse cierran ambas, y quiero qe pase eso con vCrearTarea
-pero no al revés
- */
 
 public class VentanaCrearSubtareas extends JFrame {
 
@@ -62,15 +57,13 @@ public class VentanaCrearSubtareas extends JFrame {
         contentPane.add(lblNewLabel_2);
 
         JButton confirmar = new JButton("Confirmar");
-        confirmar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                GestorBD gestorBD = new GestorBD();
-                Subtarea subtarea = new Subtarea(nombre.getText(),chckbxNewCheckBox.isSelected(),(Prioridad) prioridadSubtarea.getSelectedItem(),0,t.getId_tarea());
-                gestorBD.insertSubtareas(subtarea);
-                VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(t,proyecto,usuario);
-                ventanaVisionTarea.setVisible(true);
-                VentanaCrearSubtareas.this.setVisible(false);
-            }
+        confirmar.addActionListener(e->{
+            GestorBD gestorBD = new GestorBD();
+            Subtarea subtarea = new Subtarea(nombre.getText(),chckbxNewCheckBox.isSelected(),(Prioridad) prioridadSubtarea.getSelectedItem(),0,t.getId_tarea());
+            gestorBD.insertSubtareas(subtarea);
+            VentanaVisionTarea ventanaVisionTarea = new VentanaVisionTarea(t,proyecto,usuario);
+            ventanaVisionTarea.setVisible(true);
+            VentanaCrearSubtareas.this.setVisible(false);
         });
         confirmar.setBounds(303, 148, 125, 23);
         contentPane.add(confirmar);

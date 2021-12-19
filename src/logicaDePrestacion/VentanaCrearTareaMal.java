@@ -26,22 +26,6 @@ public class VentanaCrearTareaMal extends JFrame {
 	private JComboBox<Prioridad> prioridadTarea;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaCrearTareaMal frame = new VentanaCrearTareaMal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public VentanaCrearTareaMal() {

@@ -25,22 +25,6 @@ public class VentanaCrearUsuario extends JFrame {
     private JTextField mail;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    VentanaCrearUsuario frame = new VentanaCrearUsuario();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Create the frame.
      */
     public VentanaCrearUsuario() {
@@ -93,15 +77,13 @@ public class VentanaCrearUsuario extends JFrame {
         contentPane.add(mail);
 
         JButton Aceptar = new JButton("Aceptar");
-        Aceptar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Usuario usuario = new Usuario(nickUsuario.getText(),contrasena.getText(),nombre.getText(),mail.getText(),0);
-                GestorBD gestorBD = new GestorBD();
-                gestorBD.insertUsuarios(usuario);
-                VentanaLogin ventanaLogin = new VentanaLogin();
-                ventanaLogin.setVisible(true);
-                VentanaCrearUsuario.this.setVisible(false);
-            }
+        Aceptar.addActionListener(e->{
+            Usuario usuario = new Usuario(nickUsuario.getText(),contrasena.getText(),nombre.getText(),mail.getText(),0);
+            GestorBD gestorBD = new GestorBD();
+            gestorBD.insertUsuarios(usuario);
+            VentanaLogin ventanaLogin = new VentanaLogin();
+            ventanaLogin.setVisible(true);
+            VentanaCrearUsuario.this.setVisible(false);
         });
         Aceptar.setBounds(309, 243, 89, 23);
         contentPane.add(Aceptar);
