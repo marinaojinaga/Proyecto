@@ -1,23 +1,21 @@
 package logicaDeDatos;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 public class TareaTest {
 	
-	Tarea tarea;
+	Tarea tarea,tarea2;
 	
 	@Before
 	public void setUp() {
 		tarea = new Tarea(null, false, null, null, 0, 0);
+		tarea2 = new Tarea(null,false,null,null,0,0);
 	}
 	
 	@After
@@ -35,9 +33,7 @@ public class TareaTest {
 	
 	@Test
 	public void isHechoTest() {
-		boolean b = true;
-		tarea.setHecho(b);
-		
+		tarea.setHecho(true);
 		assertTrue(tarea.isHecho());
 	}
 	
@@ -57,5 +53,37 @@ public class TareaTest {
 		assertEquals(tarea.getDescripcion(), descripcion);
 	}
 
+	@Test
+	public void deEnumAStringTest(){
+		tarea.setPrioridad(Prioridad.Alta);
+		String prioridad = "Alta";
+		assertEquals(tarea.deEnumAString(),prioridad);
+	}
+
+	@Test
+	public void compararAlfabeticoTest(){
+		tarea.setNombre("b");
+		tarea2.setNombre("A");
+		assertTrue(tarea.compararAlfabetico(tarea2));
+	}
+
+	@Test
+	public void compararBoolTest(){
+		tarea.setHecho(false);
+		tarea2.setHecho(true);
+		assertFalse(tarea.compararBool(tarea2));
+	}
+
+	@Test
+	public void comparaPrioridadTest(){
+		tarea.setPrioridad(Prioridad.Media);
+		tarea2.setPrioridad(Prioridad.Alta);
+		assertTrue(tarea.compararPrioridad(tarea2));
+	}
+
+	@Test
+	public void dePrioridadAIntTest(){
+		assertEquals(tarea.dePrioridadAInt(Prioridad.Media),2);
+	}
 
 }

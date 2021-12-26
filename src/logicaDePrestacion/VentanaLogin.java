@@ -75,7 +75,8 @@ public class VentanaLogin extends JFrame{
                ex.printStackTrace();
            }
         });
-       Acceder.setBounds(147, 198, 122, 23);
+       Acceder.setBounds(147, 161, 122, 23);
+
        contentPane.add(Acceder);
 
        email = new JTextField();
@@ -94,7 +95,7 @@ public class VentanaLogin extends JFrame{
             ventanaCrearUsuario.setVisible(true);
             VentanaLogin.this.setVisible(false);
         });
-        crearUsuario.setBounds(147, 161, 122, 23);
+        crearUsuario.setBounds(147, 198, 122, 23);
         contentPane.add(crearUsuario);
     }
 

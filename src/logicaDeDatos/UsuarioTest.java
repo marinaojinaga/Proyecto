@@ -55,5 +55,11 @@ public class UsuarioTest {
 		assertEquals(usuario.getMail(),mail);
 		
 	}
+
+	@Test
+	public void getId_usuarioTest(){
+		usuario.setId_usuario(3);
+		assertEquals(usuario.getId_usuario(),3);
+	}
 	
 }

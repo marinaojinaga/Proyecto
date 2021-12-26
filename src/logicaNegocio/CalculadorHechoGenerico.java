@@ -16,7 +16,8 @@ public class CalculadorHechoGenerico<E extends TareaGeneral> {
     public String calcular(ArrayList<E> array){
         float hechos = (float)array.stream().filter(a->a.isHecho()).count();
         float total = (float)array.stream().count();
-        float porcentaje = hechos/total*100;
+        float porcentaje = hechos/total;
+        porcentaje = Math.round(porcentaje*100)/1;
         String p = porcentaje+"%";
         return p;
     }
